@@ -7,6 +7,9 @@ const nextConfig = {
         unoptimized: true
     },
     generateEtags: false,
+    experimental: {
+        typedRoutes: true
+    }
 }
 
 module.exports = nextConfig
