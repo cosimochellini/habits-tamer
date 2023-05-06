@@ -1,12 +1,16 @@
 {
   "name": "task-tamer",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "pnpm --recursive --parallel --stream run dev",
+    "db:generate": "pnpm --recursive --parallel --stream run generate"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^4.13.0"
+  }
 }
