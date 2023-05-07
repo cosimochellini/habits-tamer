@@ -15,7 +15,7 @@ import { jwtConstants } from '@/shared/constants'
 export class AuthService {
   constructor(private prisma: PrismaService, private jwtService: JwtService) {}
 
-  async login(email: string, password: string): Promise<AuthEntity> {
+  async login(email: string, password: string) {
     // Step 1: Fetch a user with the given email
     const user = await this.prisma.user.findUnique({ where: { email: email } })
 
@@ -31,13 +31,15 @@ export class AuthService {
     if (!isPasswordValid) {
       throw new UnauthorizedException('Invalid password')
     }
+    const payload: JwtPayload = {
+      email,
+      userId: user.id,
+      username: user.username,
+    }
 
     // Step 3: Generate a JWT containing the user's ID and return it
     return {
-      accessToken: this.jwtService.sign(
-        { userId: user.id },
-        { expiresIn: '1h', secret: jwtConstants.secret },
-      ),
+      accessToken: this.jwtService.sign(payload, jwtConstants),
     }
   }
 
