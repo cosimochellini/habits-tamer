@@ -9,7 +9,7 @@ export class UserService {
     return 'Hello User!'
   }
 
-  getUsers(): any {
+  getUsers() {
     return this.prisma.user.findMany()
   }
 }
