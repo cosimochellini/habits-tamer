@@ -2,6 +2,7 @@ import { REQUEST } from '@nestjs/core'
 import type { Request } from 'express'
 import { Inject, Injectable, Scope } from '@nestjs/common'
 import { PrismaService } from '@/src/prisma/prisma.service'
+import { User } from '@/schema/entities'
 
 @Injectable({ scope: Scope.REQUEST })
 export class CurrentUser {
@@ -14,9 +15,9 @@ export class CurrentUser {
     return this.request.user as JwtPayload
   }
 
-  private _user: any | undefined = undefined
+  private _user: User | null = null
 
-  get user(): Promise<any> {
+  get user() {
     return (async () => {
       if (this._user) return this._user
 

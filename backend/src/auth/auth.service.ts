@@ -7,8 +7,6 @@ import { JwtService } from '@nestjs/jwt'
 
 import { PrismaService } from '../prisma/prisma.service'
 
-import { AuthEntity } from './entity/auth.entity'
-
 import { jwtConstants } from '@/shared/constants'
 
 @Injectable()
