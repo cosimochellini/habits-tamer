@@ -1,8 +1,8 @@
 import '@/styles/global.css'
-import { Inter } from 'next/font/google'
 import type { ReactNode } from 'react'
+import { IconCirclePlus, IconListCheck, IconSettingsFilled } from '@tabler/icons-react'
 
-const inter = Inter({ subsets: ['latin'] })
+import { inter } from '@/styles/fonts'
 
 export const metadata = {
   title: 'Create Next App',
@@ -10,9 +10,20 @@ export const metadata = {
 }
 
 const Layout = ({ children }: { children: ReactNode }) => (
-  <html lang='en'>
-    <body className={inter.className}>{children}</body>
-  </html>
+  <div className={inter.className}>
+    {children}
+    <div className='btm-nav'>
+      <button className='text-primary' type='button'>
+        <IconListCheck />
+      </button>
+      <button className='active' type='button'>
+        <IconCirclePlus />
+      </button>
+      <button type='button'>
+        <IconSettingsFilled />
+      </button>
+    </div>
+  </div>
 )
 
 export default Layout
