@@ -3,7 +3,9 @@ const IndexPage = () => (
     <h1>Hello World</h1>
     <p> This is the index page</p>
 
-    <button className='btn'>daisy button</button>
+    <button className='btn' type='button'>
+      daisy button
+    </button>
   </div>
 )
 

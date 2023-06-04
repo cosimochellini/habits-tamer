@@ -1,10 +1,5 @@
-import NextAuth from 'next-auth'
-import EmailProvider from 'next-auth/providers/email'
+import { handler } from '@/auth/server/handler'
 
-import { provider } from '@/config/email'
+export const GET = handler
 
-const handler = NextAuth({
-  providers: [EmailProvider(provider())],
-})
-
-export { handler as GET, handler as POST }
+export const POST = handler
