@@ -9,7 +9,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint --fix",
-    "prisma:generate": "npx prisma generate --schema ./prisma/schema/schema.prisma"
+    "prisma:generate": "npx prisma generate"
   },
   "dependencies": {
     "@prisma/client": "4.15.0",
