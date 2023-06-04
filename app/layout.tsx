@@ -1,4 +1,4 @@
-import './globals.css'
+import '@/styles/global.css'
 import { Inter } from 'next/font/google'
 import type { ReactNode } from 'react'
 
