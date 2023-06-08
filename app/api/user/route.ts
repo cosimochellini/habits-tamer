@@ -1,9 +1,9 @@
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/auth/options'
 import { NextResponse } from 'next/server'
 
-export const GET = async (request: Request) => {
-  const { user } = (await getServerSession(authOptions)) ?? {}
+import { withAuth } from '@/ssr/withAuth'
+
+export const GET = async () => {
+  const { user } = await withAuth()
 
   return NextResponse.json({ user })
 }
