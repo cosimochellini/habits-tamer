@@ -18,6 +18,7 @@
     "@auth/prisma-adapter": "^1.0.0",
     "@prisma/client": "4.15.0",
     "@tabler/icons-react": "^2.22.0",
+    "classnames": "2.3.2",
     "next": "13.4.4",
     "next-auth": "^4.22.1",
     "nodemailer": "^6.9.3",

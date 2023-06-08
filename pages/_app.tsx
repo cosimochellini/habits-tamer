@@ -3,7 +3,7 @@ import type { AppProps } from 'next/app'
 import type { Session } from 'next-auth'
 import { SessionProvider } from 'next-auth/react'
 
-import { DefaultLayout } from '@/layouts'
+import { DefaultLayout } from '@/layouts/default'
 import { AuthenticatedUserProvider } from '@/providers/AuthenticatedUser'
 
 type Props = AppProps<{ session: Session }>

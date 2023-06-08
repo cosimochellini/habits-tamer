@@ -1,5 +1,5 @@
 import '@/styles/global.css'
-import { DefaultLayout } from '@/layouts'
+import { DefaultLayout } from '@/layouts/default'
 
 export const metadata = {
   title: 'Create Next App',
