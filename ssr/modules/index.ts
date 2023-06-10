@@ -4,13 +4,10 @@ import type { Route, RouteContext } from '@/types/routes'
 import { badRequest } from '@/ssr/status'
 import { getMessage } from '@/utils/error'
 
-export type Module<TNext = unknown, TError = unknown> = (
-  req: NextRequest,
-  res: RouteContext<TNext>,
-) => Promise<{ next: TNext } | { error: TError }>
+export type Module<TNext = unknown> = (req: NextRequest, res: RouteContext<TNext>) => Promise<TNext>
 
 export const withModules = <TA, TB>(
-  middlewares: [Module<TA>, Module<TB>],
+  middlewares: [Module<TA>, Module<TB>] | [Module<TA>],
   handler: (req: NextRequest, context: TA & TB) => Promise<NextResponse>,
 ) =>
   (async (req, context) => {
@@ -31,6 +28,6 @@ export const withModules = <TA, TB>(
 
       return await handler(req, routeContext)
     } catch (error) {
-      return badRequest({ error })
+      return badRequest(getMessage(error))
     }
   }) satisfies Route

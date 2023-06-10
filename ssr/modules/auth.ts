@@ -8,7 +8,5 @@ export const auth = (async () => {
 
   if (!session?.user) throw new Error('Unauthorized')
 
-  return {
-    next: { user: session.user },
-  }
+  return { user: session.user }
 }) satisfies Module
