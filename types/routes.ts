@@ -1,0 +1,11 @@
+import type { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
+
+export type RouteContext<TParams extends Record<string, string> | unknown = unknown> = {
+  params: Partial<TParams>
+}
+
+export type Route<TParams extends Record<string, string> | unknown = unknown> = (
+  res: NextRequest,
+  context: RouteContext<TParams>,
+) => Promise<NextResponse>

@@ -9,7 +9,7 @@ const email = {
   },
 } as const
 
-export const provider = () => ({
+export const provider = {
   server: `smtp://${email.auth.user}:${email.auth.pass}@${email.host}:${email.port}`,
   from: email.signature,
-})
+}
