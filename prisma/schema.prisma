@@ -3,26 +3,24 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
   relationMode = "prisma"
-
 }
 
-
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?  @db.Text
-  access_token       String?  @db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?  @db.Text
-  session_state      String?
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -45,6 +43,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  habits        Habit[]
 }
 
 model VerificationToken {
@@ -53,4 +52,44 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Habit {
+  id           String       @id @default(uuid())
+  name         String
+  description  String?
+  frequency    TaskFrequency
+  quantity     Int
+  userId       String // Foreign key to relate Habit to User
+  taskCategory TaskCategory // Task category as an enum
+
+  user      User       @relation(fields: [userId], references: [id])
+  habitLogs HabitLog[]
+}
+
+model HabitLog {
+  id      String   @id @default(uuid())
+  userId  String // Foreign key to relate HabitLog to User
+  habitId String // Foreign key to relate HabitLog to Habit
+  date    DateTime
+  // Include any other relevant fields
+
+  habit Habit @relation(fields: [habitId], references: [id])
+}
+
+enum TaskCategory {
+  LIFESTYLE
+  HEALTH
+  PERSONAL_GROWTH
+  WORK
+  EDUCATION
+  HOBBIES
+  FAMILY
+}
+
+enum TaskFrequency {
+  DAILY
+  WEEKLY
+  MONTHLY
+  YEARLY
 }
