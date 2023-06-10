@@ -3,6 +3,7 @@ type DebouncedFunc<T extends (...args: any[]) => any> = (...args: Parameters<T>)
 
 type Timeout = ReturnType<typeof setTimeout>
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const debounce = <T extends (...args: any[]) => any>(
   func: T,
   wait = 50,

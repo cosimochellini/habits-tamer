@@ -1,8 +1,9 @@
-import { ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import { IconCirclePlus, IconListCheck, IconSettingsFilled } from '@tabler/icons-react'
-import { Navbar } from './Navbar'
 import { useRouter } from 'next/router'
 import classNames from 'classnames'
+
+import { Navbar } from './Navbar'
 
 const paths = [
   { name: 'overview', icon: <IconListCheck />, path: '/' },
@@ -26,6 +27,7 @@ export const DefaultLayout = ({ children }: { children: ReactNode }) => {
       <div className='btm-nav'>
         {paths.map((path) => (
           <button
+            type='button'
             key={path.name}
             className={classNames({ active: router.pathname === path.path })}
             onClick={() => onButtonClick(path.path)}>

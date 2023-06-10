@@ -1,5 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { Route, RouteContext } from '@/types/routes'
+import type { NextRequest, NextResponse } from 'next/server'
+
+import type { Route, RouteContext } from '@/types/routes'
 import { badRequest } from '@/ssr/status'
 import { getMessage } from '@/utils/error'
 
@@ -16,8 +17,10 @@ export const withModules = <TA, TB>(
     try {
       let routeContext = {} as TA & TB
 
+      // eslint-disable-next-line no-restricted-syntax
       for (const middleware of middlewares) {
         try {
+          // eslint-disable-next-line no-await-in-loop
           const res = await middleware(req, context)
 
           routeContext = { ...routeContext, ...res }

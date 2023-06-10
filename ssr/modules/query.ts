@@ -1,5 +1,6 @@
-import { z } from 'zod'
-import { Module } from './'
+import type { z } from 'zod'
+
+import type { Module } from '.'
 
 export const query = <TSchema>(schema: z.Schema<TSchema>) =>
   (async (req) => {
