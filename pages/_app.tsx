@@ -8,16 +8,14 @@ import { AuthenticatedUserProvider } from '@/providers/AuthenticatedUser'
 
 type Props = AppProps<{ session: Session }>
 
-const App = ({ Component, pageProps: { session, ...pageProps } }: Props) => {
-  return (
-    <SessionProvider session={session}>
-      <AuthenticatedUserProvider>
-        <DefaultLayout>
-          <Component {...pageProps} />
-        </DefaultLayout>
-      </AuthenticatedUserProvider>
-    </SessionProvider>
-  )
-}
+const App = ({ Component, pageProps: { session, ...pageProps } }: Props) => (
+  <SessionProvider session={session}>
+    <AuthenticatedUserProvider>
+      <DefaultLayout>
+        <Component {...pageProps} />
+      </DefaultLayout>
+    </AuthenticatedUserProvider>
+  </SessionProvider>
+)
 
 export default App
