@@ -4,5 +4,5 @@ const componentsFolders = ['components', 'layouts', 'pages', 'app', 'features']
 module.exports = {
   content: componentsFolders.map((folder) => `./${folder}/**/*.{js,ts,jsx,tsx,mdx}`),
   theme: {},
-  plugins: [require('daisyui')],
+  plugins: [require('@tailwindcss/typography'), require('daisyui')],
 }
