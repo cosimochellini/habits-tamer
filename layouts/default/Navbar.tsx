@@ -1,12 +1,13 @@
 import { useSession } from 'next-auth/react'
 
-export const Navbar = () => {
-  const { data } = useSession()
-
-  const initials = data?.user?.name
+const initials = (name: string | undefined | null) =>
+  name
     ?.split(' ')
     .map(([n]) => n.toUpperCase())
     .join('')
+
+export const Navbar = () => {
+  const { data } = useSession()
 
   return (
     <div className='navbar bg-base-100'>
@@ -17,7 +18,7 @@ export const Navbar = () => {
       <div className='navbar-end'>
         <div className='avatar placeholder'>
           <div className='bg-secondary-focus text-primary rounded-full w-10 ring ring-primary ring-offset-base-100 ring-offset-2'>
-            <span className={'text-xl'}>{initials} </span>
+            <span className={'text-xl'}>{initials(data?.user?.name)} </span>
           </div>
         </div>
       </div>

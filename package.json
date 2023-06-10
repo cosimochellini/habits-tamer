@@ -1,13 +1,14 @@
 {
   "name": "task-tamer",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "license": "MIT",
   "author": "Cosimo Chellini <cosimo.chellini@gmail.com>",
   "private": false,
   "scripts": {
     "build": "next build",
     "build:ci": "pnpm i & pnpm prisma:generate & pnpm build",
-    "dev": "next dev",
+    "dev": "pnpm increase & next dev -p 4000",
+    "increase": "npm --no-git-tag-version version patch",
     "lint": "next lint --fix",
     "prisma:deploy": "npx prisma db push",
     "prisma:generate": "npx prisma generate",
@@ -28,11 +29,11 @@
     "tailwindcss": "3.3.2"
   },
   "devDependencies": {
-    "@types/node": "20.2.5",
-    "@types/react": "18.2.9",
+    "@types/node": "20.2.6",
+    "@types/react": "18.2.10",
     "@types/react-dom": "18.2.4",
     "autoprefixer": "10.4.14",
-    "daisyui": "^3.0.20",
+    "daisyui": "^3.0.22",
     "eslint": "8.42.0",
     "eslint-config-airbnb": "19.0.4",
     "eslint-config-airbnb-typescript": "17.0.0",
