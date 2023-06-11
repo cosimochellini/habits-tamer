@@ -1,4 +1,4 @@
-const { OPENAI_API_KEY } = process.env
+import { openai } from '@/config/openai'
 
 type Path = 'completions' | 'create' | 'delete'
 
@@ -7,7 +7,7 @@ const fetcher = <T>(path: Path, body: Record<string, unknown>) =>
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${OPENAI_API_KEY}`,
+      Authorization: `Bearer ${openai.secret}`,
     },
     body: JSON.stringify(body),
   }).then((res) => res.json() as Promise<T>)

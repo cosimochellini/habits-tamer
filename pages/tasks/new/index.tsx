@@ -1,3 +1,3 @@
-import { NewTaskPage } from '@/features/tasks/new-task/page/NewTaskPage'
+import { NewTaskPage } from '@/features/tasks/newTask/page/NewTaskPage'
 
 export default NewTaskPage

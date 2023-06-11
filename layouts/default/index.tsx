@@ -29,7 +29,7 @@ export const DefaultLayout = ({ children }: { children: ReactNode }) => {
           <button
             type='button'
             key={path.name}
-            className={classNames({ active: router.pathname === path.path })}
+            className={classNames({ 'active text-secondary': router.pathname === path.path })}
             onClick={() => onButtonClick(path.path)}>
             {path.icon}
           </button>

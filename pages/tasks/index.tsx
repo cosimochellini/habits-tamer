@@ -1,5 +1,3 @@
-const TasksPage = () => {
-  return <div>Tasks</div>
-}
+import { TaskListPage } from '@/features/tasks/taskList/page/TaskListPage'
 
-export default TasksPage
+export default TaskListPage
