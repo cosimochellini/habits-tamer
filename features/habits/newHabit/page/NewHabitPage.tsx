@@ -2,35 +2,35 @@ import type { Habit } from '@prisma/client'
 import { IconArrowNarrowRight, IconLoader } from '@tabler/icons-react'
 
 import { useObjectState } from '@/hooks/object'
-
-import { TaskCategorySelect } from '../components/TaskCategorySelect'
-import { TaskFrequencySelect } from '../components/TaskFrquencySelect'
 import { logger } from '@/istances/logger'
 
-const fetchSuggestion = async (task: string) => {
-  const res = await fetch(`/api/tasks/new/suggestion?${new URLSearchParams({ task })}`)
-  return (await res.json()) as { suggestedTask: Habit }
+import { HabitFrequencySelect } from '../components/HabitFrquencySelect'
+import { HabitCategorySelect } from '../components/HabitCategorySelect'
+
+const fetchSuggestion = async (habit: string) => {
+  const res = await fetch(`/api/habits/new/suggestion?${new URLSearchParams({ habit })}`)
+  return (await res.json()) as { suggestedHabit: Habit }
 }
 
-export const NewTaskPage = () => {
+export const NewHabitPage = () => {
   const [suggestion, setSuggestion] = useObjectState({
     loading: false,
     completed: false,
     name: '',
   })
 
-  const [task, setTask] = useObjectState<Habit>()
+  const [habit, setHabit] = useObjectState<Habit>()
 
   const onAiClick = async () => {
     if (!suggestion.name) return
 
     setSuggestion({ loading: true })
 
-    const { suggestedTask } = (await fetchSuggestion(suggestion.name).catch(logger.log)) ?? {}
+    const { suggestedHabit } = (await fetchSuggestion(suggestion.name).catch(logger.log)) ?? {}
 
-    if (!suggestedTask) return
+    if (!suggestedHabit) return
 
-    setTask(suggestedTask)
+    setHabit(suggestedHabit)
     setSuggestion({ loading: false, completed: true })
   }
 
@@ -48,7 +48,7 @@ export const NewTaskPage = () => {
           <div className='flex flex-col gap-6 w-full items-center justify-center px-10'>
             <input
               type='text'
-              name='taskDescription'
+              name='habitDescription'
               value={suggestion.name}
               onChange={(e) => setSuggestion({ name: e.target.value })}
               placeholder='eg. "Eat healthy four times a week"'
@@ -69,37 +69,37 @@ export const NewTaskPage = () => {
           <input
             type='text'
             name='name'
-            value={task.name}
-            onChange={(e) => setTask({ ...task, name: e.target.value })}
-            placeholder='Enter the task name'
+            value={habit.name}
+            onChange={(e) => setHabit({ name: e.target.value })}
+            placeholder='Enter the habit name'
             className='input input-bordered input-accent w-full max-w-xs'
           />
 
-          <TaskCategorySelect
-            onChange={(c) => setTask({ ...task, taskCategory: c })}
-            value={task.taskCategory}
+          <HabitCategorySelect
+            onChange={(c) => setHabit({ habitCategory: c })}
+            value={habit.habitCategory}
           />
 
           <input
             type='text'
             name='description'
-            placeholder='Enter the task description'
-            value={task.description ?? undefined}
-            onChange={(e) => setTask({ ...task, description: e.target.value })}
+            placeholder='Enter the habit description'
+            value={habit.description ?? undefined}
+            onChange={(e) => setHabit({ description: e.target.value })}
             className='input input-bordered input-accent w-full max-w-xs'
           />
 
-          <TaskFrequencySelect
-            onChange={(f) => setTask({ ...task, frequency: f })}
-            value={task.frequency}
+          <HabitFrequencySelect
+            onChange={(f) => setHabit({ frequency: f })}
+            value={habit.frequency}
           />
 
           <input
             type='number'
             name='frequency'
-            value={task.quantity}
-            onChange={(e) => setTask({ ...task, quantity: Number(e.target.value) })}
-            placeholder='Enter the task frequency'
+            value={habit.quantity}
+            onChange={(e) => setHabit({ quantity: Number(e.target.value) })}
+            placeholder='Enter the habit frequency'
             className='input input-bordered input-accent w-full max-w-xs'
           />
 
@@ -108,7 +108,7 @@ export const NewTaskPage = () => {
               Cancel
             </button>
             <button type='submit' className='btn btn-accent'>
-              Add task
+              Add habit
             </button>
           </div>
         </form>

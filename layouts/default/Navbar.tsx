@@ -15,7 +15,7 @@ export const Navbar = () => {
       <div className='navbar-start' />
       <div className='navbar-center'>
         <Link href='/' className='btn btn-ghost normal-case text-xl'>
-          Task Tamer
+          Habit Tamer
         </Link>
       </div>
       <div className='navbar-end'>

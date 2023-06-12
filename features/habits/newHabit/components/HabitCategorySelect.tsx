@@ -1,23 +1,23 @@
-import { TaskCategory } from '@prisma/client'
+import { HabitCategory } from '@prisma/client'
 
 import { typedObjectValues } from '@/types/object'
 import { formatEnumValue } from '@/utils/enum'
 
-interface TaskCategorySelectProps {
-  value?: TaskCategory
-  onChange: (taskCategory: TaskCategory) => void
+interface HabitCategorySelectProps {
+  value?: HabitCategory
+  onChange: (habitCategory: HabitCategory) => void
 }
 
-export const TaskCategorySelect = ({ value, onChange }: TaskCategorySelectProps) => {
-  const options = typedObjectValues(TaskCategory)
+export const HabitCategorySelect = ({ value, onChange }: HabitCategorySelectProps) => {
+  const options = typedObjectValues(HabitCategory)
 
   return (
     <select
       value={value}
-      onChange={(e) => onChange(e.target.value as TaskCategory)}
+      onChange={(e) => onChange(e.target.value as HabitCategory)}
       className='select select-accent w-full max-w-xs'>
       <option disabled selected>
-        Select a task category
+        Select a category
       </option>
       {options.map((option) => (
         <option key={option} value={option}>

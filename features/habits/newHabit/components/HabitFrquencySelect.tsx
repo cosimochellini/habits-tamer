@@ -1,23 +1,23 @@
-import { TaskFrequency } from '@prisma/client'
+import { HabitFrequency } from '@prisma/client'
 
 import { typedObjectValues } from '@/types/object'
 import { formatEnumValue } from '@/utils/enum'
 
-interface TaskFrequencySelectProps {
-  value?: TaskFrequency
-  onChange: (TaskFrequency: TaskFrequency) => void
+interface HabitFrequencySelectProps {
+  value?: HabitFrequency
+  onChange: (HabitFrequency: HabitFrequency) => void
 }
 
-export const TaskFrequencySelect = ({ value, onChange }: TaskFrequencySelectProps) => {
-  const options = typedObjectValues(TaskFrequency)
+export const HabitFrequencySelect = ({ value, onChange }: HabitFrequencySelectProps) => {
+  const options = typedObjectValues(HabitFrequency)
 
   return (
     <select
       value={value}
-      onChange={(e) => onChange(e.target.value as TaskFrequency)}
+      onChange={(e) => onChange(e.target.value as HabitFrequency)}
       className='select select-accent w-full max-w-xs'>
       <option disabled selected>
-        Select the task frequency
+        Select the frequency
       </option>
       {options.map((option) => (
         <option key={option} value={option}>

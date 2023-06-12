@@ -7,7 +7,7 @@ import { Navbar } from './Navbar'
 
 const paths = [
   { name: 'overview', icon: <IconListCheck />, path: '/' },
-  { name: 'tasks', icon: <IconCirclePlus />, path: '/tasks' },
+  { name: 'habits', icon: <IconCirclePlus />, path: '/habits' },
   { name: 'settings', icon: <IconSettingsFilled />, path: '/settings' },
 ]
 
