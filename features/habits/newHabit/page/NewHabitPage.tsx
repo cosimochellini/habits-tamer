@@ -2,15 +2,15 @@ import type { Habit } from '@prisma/client'
 import { IconArrowNarrowRight, IconLoader } from '@tabler/icons-react'
 
 import { useObjectState } from '@/hooks/object'
-import { logger } from '@/istances/logger'
+import { fetcher } from '@/utils/fetch'
+import type { SuggestionQuery, SuggestionResult } from '@/app/api/habits/new/suggestion/route'
 
 import { HabitFrequencySelect } from '../components/HabitFrquencySelect'
 import { HabitCategorySelect } from '../components/HabitCategorySelect'
 
-const fetchSuggestion = async (habit: string) => {
-  const res = await fetch(`/api/habits/new/suggestion?${new URLSearchParams({ habit })}`)
-  return (await res.json()) as { suggestedHabit: Habit }
-}
+const fetchSuggestions = fetcher<SuggestionResult, SuggestionQuery>('/api/habits/new/suggestions')
+
+const postHabit = fetcher<{ habitId: string }, never, Partial<Habit>>('/api/habits', 'POST')
 
 export const NewHabitPage = () => {
   const [suggestion, setSuggestion] = useObjectState({
@@ -26,12 +26,20 @@ export const NewHabitPage = () => {
 
     setSuggestion({ loading: true })
 
-    const { suggestedHabit } = (await fetchSuggestion(suggestion.name).catch(logger.log)) ?? {}
+    const { suggestedHabit } = await fetchSuggestions({
+      query: { habit: suggestion.name },
+    })
 
     if (!suggestedHabit) return
 
     setHabit(suggestedHabit)
     setSuggestion({ loading: false, completed: true })
+  }
+
+  const onConfirm = async () => {
+    if (!habit) return
+
+    await postHabit({ body: habit }).then(console.log)
   }
 
   return (
@@ -104,10 +112,13 @@ export const NewHabitPage = () => {
           />
 
           <div className='flex flex-row-reverse items-end gap-6'>
-            <button type='button' className='btn btn-accent'>
+            <button
+              type='button'
+              className='btn btn-accent'
+              onClick={() => setSuggestion({ completed: false })}>
               Cancel
             </button>
-            <button type='submit' className='btn btn-accent'>
+            <button type='submit' className='btn btn-accent' onClick={onConfirm}>
               Add habit
             </button>
           </div>

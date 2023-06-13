@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import type { Habit } from '@prisma/client'
 import { HabitCategory, HabitFrequency } from '@prisma/client'
 
 import { auth } from '@/ssr/modules/auth'
@@ -6,6 +7,7 @@ import { query } from '@/ssr/modules/query'
 import { withModules } from '@/ssr/modules'
 import { badRequest, ok } from '@/ssr/status'
 import { completions } from '@/istances/openAi'
+import type { InferResponse } from '@/types/api'
 
 const schema = z.object({
   habit: z.string(),
@@ -27,7 +29,10 @@ export const GET = withModules([query(schema), auth], async (res, context) => {
 
   const content = habitCompletions.choices[0]?.message.content
 
-  if (!content) return badRequest({ error: 'Suggestion not found' })
+  if (!content) return badRequest('Suggestion not found')
 
-  return ok({ suggestedHabit: JSON.parse(content) })
+  return ok({ suggestedHabit: JSON.parse(content) as Habit })
 })
+
+export type SuggestionResult = InferResponse<typeof GET>
+export type SuggestionQuery = z.infer<typeof schema>

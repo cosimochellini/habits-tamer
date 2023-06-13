@@ -6,9 +6,9 @@ import { getMessage } from '@/utils/error'
 
 export type Module<TNext = unknown> = (req: NextRequest, res: RouteContext<TNext>) => Promise<TNext>
 
-export const withModules = <TA, TB>(
+export const withModules = <TA, TB, TResult extends NextResponse>(
   middlewares: [Module<TA>, Module<TB>] | [Module<TA>],
-  handler: (req: NextRequest, context: TA & TB) => Promise<NextResponse>,
+  handler: (req: NextRequest, context: TA & TB) => Promise<TResult>,
 ) =>
   (async (req, context) => {
     try {

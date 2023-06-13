@@ -1,6 +1,6 @@
 {
-  "name": "habit-tamer",
-  "version": "0.3.10",
+  "name": "habits-tamer",
+  "version": "0.4.1",
   "license": "MIT",
   "author": "Cosimo Chellini <cosimo.chellini@gmail.com>",
   "private": false,

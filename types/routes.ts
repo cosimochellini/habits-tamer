@@ -4,7 +4,7 @@ export type RouteContext<TParams extends Record<string, string> | unknown = unkn
   params: Partial<TParams>
 }
 
-export type Route<TParams extends Record<string, string> | unknown = unknown> = (
+export type Route<TParams extends Record<string, string> | unknown = unknown, TResult = unknown> = (
   res: NextRequest,
   context: RouteContext<TParams>,
-) => Promise<NextResponse>
+) => Promise<NextResponse<TResult>>
