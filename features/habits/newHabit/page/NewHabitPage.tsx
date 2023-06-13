@@ -1,16 +1,22 @@
 import type { Habit } from '@prisma/client'
-import { IconArrowNarrowRight, IconLoader } from '@tabler/icons-react'
+import {
+  IconAlertTriangle,
+  IconArrowNarrowRight,
+  IconCirclePlus,
+  IconLoader,
+} from '@tabler/icons-react'
 
 import { useObjectState } from '@/hooks/object'
 import { fetcher } from '@/utils/fetch'
-import type { SuggestionQuery, SuggestionResult } from '@/app/api/habits/new/suggestion/route'
+import type { PostHabitBody, PostHabitResult } from '@/app/api/habits/route'
+import type { SuggestionQuery, SuggestionResult } from '@/app/api/habits/new/suggestions/route'
 
 import { HabitFrequencySelect } from '../components/HabitFrquencySelect'
 import { HabitCategorySelect } from '../components/HabitCategorySelect'
 
 const fetchSuggestions = fetcher<SuggestionResult, SuggestionQuery>('/api/habits/new/suggestions')
 
-const postHabit = fetcher<{ habitId: string }, never, Partial<Habit>>('/api/habits', 'POST')
+const postHabit = fetcher<PostHabitResult, never, PostHabitBody>('/api/habits', 'POST')
 
 export const NewHabitPage = () => {
   const [suggestion, setSuggestion] = useObjectState({
@@ -39,7 +45,9 @@ export const NewHabitPage = () => {
   const onConfirm = async () => {
     if (!habit) return
 
-    await postHabit({ body: habit }).then(console.log)
+    const result = await postHabit({ body: habit as Habit })
+
+    console.log(result)
   }
 
   return (
@@ -73,7 +81,12 @@ export const NewHabitPage = () => {
           </div>
         </form>
       ) : (
-        <form className='flex flex-col gap-6 w-full items-center h-full'>
+        <form
+          className='flex flex-col gap-6 w-full items-center h-full'
+          onSubmit={(e) => {
+            e.preventDefault()
+            onConfirm()
+          }}>
           <input
             type='text'
             name='name'
@@ -111,15 +124,15 @@ export const NewHabitPage = () => {
             className='input input-bordered input-accent w-full max-w-xs'
           />
 
-          <div className='flex flex-row-reverse items-end gap-6'>
+          <div className='flex flex-row items-stretch gap-10'>
             <button
               type='button'
-              className='btn btn-accent'
+              className='btn btn-warning'
               onClick={() => setSuggestion({ completed: false })}>
-              Cancel
+              Cancel <IconAlertTriangle />
             </button>
-            <button type='submit' className='btn btn-accent' onClick={onConfirm}>
-              Add habit
+            <button type='submit' className='btn btn-accent'>
+              Add habit <IconCirclePlus />
             </button>
           </div>
         </form>
