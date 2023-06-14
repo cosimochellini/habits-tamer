@@ -11,7 +11,7 @@ export const HabitsListPage = () => {
   const habits = useHabits()
 
   return (
-    <div className='h-screen flex flex-col gap-6'>
+    <div className='flex flex-col gap-6'>
       <h1 className='prose-2xl font-semibold w-full text-center'>Your habits</h1>
 
       <div className='flex flex-col gap-6 w-full items-center'>

@@ -24,7 +24,7 @@ export const DefaultLayout = ({ children }: { children: ReactNode }) => {
     <>
       <Navbar />
 
-      <div className='bg-base'>{children}</div>
+      <div className='bg-base pb-20 min-h-screen my-3'>{children}</div>
 
       <div className='btm-nav bg-base-300'>
         {paths.map((path) => (

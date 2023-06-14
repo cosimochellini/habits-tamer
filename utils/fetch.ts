@@ -1,4 +1,4 @@
-type Methods = 'GET' | 'POST' | 'PUT' | 'DELETE'
+type Methods = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'
 
 const headers = {
   'Content-Type': 'application/json',
