@@ -1,5 +1,3 @@
-const SettingsPage = () => {
-  return <div>Settings</div>
-}
+import { SettingsPage } from '@/features/settings/SettingsPage/SettingsPage'
 
 export default SettingsPage

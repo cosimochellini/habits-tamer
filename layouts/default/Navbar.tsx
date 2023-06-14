@@ -11,7 +11,7 @@ export const Navbar = () => {
   const { data } = useSession()
 
   return (
-    <div className='navbar bg-base-100'>
+    <div className='navbar bg-base-300'>
       <div className='navbar-start' />
       <div className='navbar-center'>
         <Link href='/' className='btn btn-ghost normal-case text-xl'>

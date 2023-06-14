@@ -3,6 +3,8 @@ import { IconCirclePlus, IconListCheck, IconSettingsFilled } from '@tabler/icons
 import { useRouter } from 'next/router'
 import classNames from 'classnames'
 
+import { useTheme } from '@/store/theme'
+
 import { Navbar } from './Navbar'
 
 const paths = [
@@ -12,24 +14,26 @@ const paths = [
 ]
 
 export const DefaultLayout = ({ children }: { children: ReactNode }) => {
+  useTheme()
+
   const router = useRouter()
 
-  const onButtonClick = async (path: string) => {
-    await router.push(path)
-  }
+  const onButtonClick = router.push
 
   return (
     <>
       <Navbar />
 
-      {children}
+      <div className='bg-base'>{children}</div>
 
-      <div className='btm-nav'>
+      <div className='btm-nav bg-base-300'>
         {paths.map((path) => (
           <button
             type='button'
             key={path.name}
-            className={classNames({ 'active text-secondary': router.pathname === path.path })}
+            className={classNames({
+              'active text-secondary bg-base-200': router.pathname === path.path,
+            })}
             onClick={() => onButtonClick(path.path)}>
             {path.icon}
           </button>
