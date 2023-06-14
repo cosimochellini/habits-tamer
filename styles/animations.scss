@@ -1,0 +1,23 @@
+$bouncyEaseFunction: cubic-bezier(0.83, 2.14, 0.58, 0.64);
+
+@mixin stagger($animationDuration: 0.5s) {
+  @for $i from 1 through 12 {
+    & > *:nth-child(#{$i}) {
+      @include slideIn($animationDuration, (($animationDuration * $i - 1) / 3)
+      );
+    }
+  }
+}
+
+@mixin slideIn($animationDuration: 0.3s, $delay: 0.05s) {
+  animation: slideIn $animationDuration $bouncyEaseFunction $delay normal both;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(min(10%, 2em));
+    opacity: 0;
+    filter: blur(2px);
+  }
+}
+

@@ -1,18 +1,3 @@
-import { useSession } from 'next-auth/react'
+import { OverviewPage } from '@/features/overview/OverviewPage/OverviewPage'
 
-const IndexPage = () => {
-  const { data: session } = useSession()
-
-  return (
-    <div className='h-screen flex flex-col gap-2 justify-center w-full'>
-      <h1>Hello World</h1>
-      <p> This is the index page</p>
-      {JSON.stringify(session?.user?.name)}
-      <button className='btn' type='button'>
-        daisy button
-      </button>
-    </div>
-  )
-}
-
-export default IndexPage
+export default OverviewPage

@@ -1,14 +1,15 @@
 import { create } from 'zustand'
 import { useEffectOnceWhen } from 'rooks'
-import type { Habit } from '@prisma/client'
 import { persist } from 'zustand/middleware'
 
 import { fetcher } from '@/utils/fetch'
 import { useSSRSafeSelector } from '@/hooks/ssrStore'
 import type { GetHabitsResult } from '@/app/api/habits/route'
 
+export type HabitResult = GetHabitsResult['habits'][0]
+
 interface State {
-  habits: Habit[]
+  habits: HabitResult[]
   initialized: boolean
 }
 
