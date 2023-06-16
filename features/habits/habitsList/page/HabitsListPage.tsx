@@ -15,7 +15,7 @@ export const HabitsListPage = () => {
       <h1 className='prose-2xl font-semibold w-full text-center'>Your habits</h1>
 
       <div className='flex flex-col gap-6 w-full items-center'>
-        <Link href='/habits/new' className='btn btn-accent'>
+        <Link href='/habits/new' className='btn btn-accent' prefetch>
           Add a new habit <IconCirclePlus />
         </Link>
 

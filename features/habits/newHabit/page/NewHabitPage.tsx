@@ -13,10 +13,10 @@ import { useObjectState } from '@/hooks/object'
 import { startLoading, stopLoading } from '@/store/loading'
 import type { PostHabitBody, PostHabitResult } from '@/app/api/habits/route'
 import type { SuggestionQuery, SuggestionResult } from '@/app/api/habits/new/suggestions/route'
+import { reloadHabits } from '@/store/habits'
 
 import { HabitFrequencySelect } from '../components/HabitFrquencySelect'
 import { HabitCategorySelect } from '../components/HabitCategorySelect'
-import { reloadHabits } from '@/store/habits'
 
 const fetchSuggestions = fetcher<SuggestionResult, SuggestionQuery>('/api/habits/new/suggestions')
 
