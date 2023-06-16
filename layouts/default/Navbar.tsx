@@ -11,7 +11,7 @@ export const Navbar = () => {
   const { data } = useSession()
 
   return (
-    <div className='navbar bg-base-300'>
+    <div className='navbar bg-base-200'>
       <div className='navbar-start' />
       <div className='navbar-center'>
         <Link href='/' className='btn btn-ghost normal-case text-xl'>
@@ -20,7 +20,7 @@ export const Navbar = () => {
       </div>
       <div className='navbar-end'>
         <div className='avatar placeholder'>
-          <div className='bg-secondary-focus text-primary rounded-full w-10 ring ring-primary ring-offset-base-100 ring-offset-2'>
+          <div className='bg-primary/30 text-primary rounded-full w-10 ring ring-primary ring-offset-base-100 ring-offset-2'>
             <span className='text-xl'>{initials(data?.user?.name)} </span>
           </div>
         </div>

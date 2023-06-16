@@ -1,6 +1,6 @@
 import type { HabitCategory } from '@prisma/client'
 import type { ReactNode } from 'react'
-import { memo } from 'react'
+import { memo, useMemo } from 'react'
 import type { TablerIconsProps } from '@tabler/icons-react'
 import {
   IconAirBalloon,
@@ -33,3 +33,34 @@ export const HabitCategoryIcon = memo(function HabitCategoryIcon({
   const Icon = habitIcons[category]
   return <Icon {...props} />
 })
+
+const colorFactory = (category: HabitCategory) => {
+  switch (category) {
+    case 'EDUCATION':
+      return 'badge-primary'
+    case 'FAMILY':
+      return 'badge-info'
+    case 'WORK':
+      return 'badge-secondary'
+    case 'HEALTH':
+      return 'badge-success'
+    case 'HOBBIES':
+      return 'badge-info'
+    case 'PERSONAL_GROWTH':
+      return 'badge-warning'
+    default:
+      return 'badge-primary'
+  }
+}
+
+export const HabitCategoryIconBadge = ({ category, ...props }: HabitCategoryIconProps) => {
+  const Icon = habitIcons[category]
+  const bgColor = useMemo(() => colorFactory(category), [category])
+
+  return (
+    <div className={`badge gap-2 px-4 py-3 ${bgColor}`}>
+      {category}
+      <Icon {...props} />
+    </div>
+  )
+}

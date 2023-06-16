@@ -2,7 +2,7 @@ import type { Habit } from '@prisma/client'
 import Link from 'next/link'
 
 import { HabitCategoryIcon } from '@/components/habits/HabitCategoryIcon'
-import { formatFrequency } from '@/utils/enum'
+import { HabitFrequencyBadge } from '@/components/habits/HabitFrequencyBadge'
 
 interface HabitCardProps {
   habit: Habit
@@ -20,13 +20,15 @@ export const HabitCard = ({ habit }: HabitCardProps) => {
         <p>{habit.description}</p>
 
         <div>
-          {habit.quantity} {habit.quantity === 1 ? 'time' : 'times'} per{' '}
-          {formatFrequency(habit.frequency)}
+          <HabitFrequencyBadge habit={habit} />
         </div>
 
         <div className='card-actions justify-end'>
-          <Link href='/' className='btn'>
-            Buy Now
+          <button type='button' className='btn btn-sm btn-accent'>
+            Delete
+          </button>
+          <Link href='/' className='btn btn-sm btn-secondary'>
+            Edit
           </Link>
         </div>
       </div>

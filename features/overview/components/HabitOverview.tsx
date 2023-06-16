@@ -1,5 +1,5 @@
 import type { HabitResult } from '@/store/habits'
-import { HabitCategoryIcon } from '@/components/habits/HabitCategoryIcon'
+import { HabitCategoryIconBadge } from '@/components/habits/HabitCategoryIcon'
 
 interface HabitOverviewProps {
   habit: HabitResult
@@ -8,11 +8,11 @@ export const HabitOverview = ({ habit }: HabitOverviewProps) => {
   const percentage = Math.random() * 100
 
   return (
-    <div className='card rounded-2xl bg-accent w-full h-full aspect-square'>
+    <div className='card bg-secondary/80 w-full h-full aspect-square'>
       <div className='card-body'>
-        <div>
-          <HabitCategoryIcon category={habit.habitCategory} className='text-center m-auto' />
+        <div className='flex gap-2 flex-col items-center'>
           <div className='text-center m-auto'>{habit.name}</div>
+          <HabitCategoryIconBadge category={habit.habitCategory} />
         </div>
         <div className='text-center'>{percentage.toFixed(0)}%</div>
       </div>
