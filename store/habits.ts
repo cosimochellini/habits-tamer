@@ -33,3 +33,9 @@ export const useHabits = () => {
 
   return habits
 }
+
+export const reloadHabits = () => {
+  const set = useStore.setState
+
+  return fetchHabits().then(({ habits }) => set({ habits, initialized: true }))
+}

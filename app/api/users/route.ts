@@ -14,7 +14,7 @@ const habitSchema = z
   })
   .partial()
 
-export const PATCH = withModules([auth, body(habitSchema)], async (_, { email, body }) => {
+export const PATCH = withModules([auth, body(habitSchema)], async ({ email, body }) => {
   const user = await prismaClient.user.findUniqueOrThrow({
     where: { email },
   })

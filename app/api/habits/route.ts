@@ -9,11 +9,9 @@ import { prismaClient } from '@/prisma/client'
 import type { InferResponse } from '@/types/api'
 
 const lastYear = new Date(new Date().setFullYear(new Date().getFullYear() - 1))
-export const GET = withModules([auth], async (req, context) => {
-  const userEmail = context.email
-
+export const GET = withModules([auth], async ({ email }) => {
   const habits = await prismaClient.habit.findMany({
-    where: { user: { email: userEmail } },
+    where: { user: { email } },
     include: {
       habitLogs: {
         where: { date: { gte: lastYear } },
@@ -35,7 +33,7 @@ const habitSchema = z.object({
 
   habitCategory: z.nativeEnum(HabitCategory),
 })
-export const POST = withModules([auth, body(habitSchema)], async (_, { email, body }) => {
+export const POST = withModules([auth, body(habitSchema)], async ({ email, body }) => {
   const user = await prismaClient.user.findUniqueOrThrow({
     where: { email },
   })

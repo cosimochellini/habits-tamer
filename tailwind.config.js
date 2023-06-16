@@ -1,4 +1,4 @@
-const componentsFolders = ['components', 'layouts', 'pages', 'app', 'features']
+const componentsFolders = ['components', 'layouts', 'pages', 'app', 'features', 'providers']
 
 /** @type {import("tailwindcss").Config} */
 module.exports = {

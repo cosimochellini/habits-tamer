@@ -8,7 +8,7 @@ export type Module<TNext = unknown> = (req: NextRequest, res: RouteContext<TNext
 
 export const withModules = <TA, TB, TResult extends NextResponse>(
   middlewares: [Module<TA>, Module<TB>] | [Module<TA>],
-  handler: (req: NextRequest, context: TA & TB) => Promise<TResult>,
+  handler: (context: TA & TB) => Promise<TResult>,
 ) =>
   (async (req, context) => {
     try {
@@ -26,7 +26,7 @@ export const withModules = <TA, TB, TResult extends NextResponse>(
         }
       }
 
-      return await handler(req, routeContext)
+      return await handler(routeContext)
     } catch (error) {
       return badRequest(getMessage(error))
     }
