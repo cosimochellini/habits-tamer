@@ -1,12 +1,13 @@
 import Link from 'next/link'
 import type { Habit } from '@prisma/client'
 
+import { fetcher } from '@/utils/fetch'
 import { useModal } from '@/store/modal'
+import { reloadHabits } from '@/store/habits'
+import { startLoading, stopLoading } from '@/store/loading'
+import type { DeleteHabitResult } from '@/app/api/habits/[id]/route'
 import { HabitCategoryIcon } from '@/components/habits/HabitCategoryIcon'
 import { HabitFrequencyBadge } from '@/components/habits/HabitFrequencyBadge'
-import { fetcher } from '@/utils/fetch'
-import type { DeleteHabitResult } from '@/app/api/habits/[id]/route'
-import { reloadHabits } from '@/store/habits'
 
 interface HabitCardProps {
   habit: Habit
@@ -30,9 +31,13 @@ export const HabitCard = ({ habit }: HabitCardProps) => {
 
     if (result === 'cancel') return
 
+    startLoading()
+
     const { result: deleteResult } = await deleteHabit(habit.id)
 
     if (deleteResult.count > 0) await reloadHabits()
+
+    stopLoading()
   }
 
   return (

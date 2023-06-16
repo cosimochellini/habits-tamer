@@ -6,6 +6,7 @@ import { SessionProvider } from 'next-auth/react'
 import { DefaultLayout } from '@/layouts/default'
 import { AuthenticatedUserProvider } from '@/providers/AuthenticatedUser'
 import { ModalProvider } from '@/providers/ModalProvider'
+import { LoadingProvider } from '@/providers/LoadingProvider'
 
 type Props = AppProps<{ session: Session }>
 
@@ -15,6 +16,7 @@ const App = ({ Component, pageProps: { session, ...pageProps } }: Props) => (
       <DefaultLayout>
         <Component {...pageProps} />
         <ModalProvider />
+        <LoadingProvider />
       </DefaultLayout>
     </AuthenticatedUserProvider>
   </SessionProvider>

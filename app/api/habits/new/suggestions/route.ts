@@ -13,8 +13,8 @@ const schema = z.object({
   habit: z.string(),
 })
 
-export const GET = withModules([query(schema), auth], async (res, context) => {
-  const { habit } = context.query
+export const GET = withModules([query(schema), auth], async ({ query }) => {
+  const { habit } = query
 
   const prompt = `
   I have a model like this:  

@@ -5,14 +5,18 @@ import {
   IconCirclePlus,
   IconLoader,
 } from '@tabler/icons-react'
+import Router from 'next/router'
 
-import { useObjectState } from '@/hooks/object'
+import { prevent } from '@/utils/react'
 import { fetcher } from '@/utils/fetch'
+import { useObjectState } from '@/hooks/object'
+import { startLoading, stopLoading } from '@/store/loading'
 import type { PostHabitBody, PostHabitResult } from '@/app/api/habits/route'
 import type { SuggestionQuery, SuggestionResult } from '@/app/api/habits/new/suggestions/route'
 
 import { HabitFrequencySelect } from '../components/HabitFrquencySelect'
 import { HabitCategorySelect } from '../components/HabitCategorySelect'
+import { reloadHabits } from '@/store/habits'
 
 const fetchSuggestions = fetcher<SuggestionResult, SuggestionQuery>('/api/habits/new/suggestions')
 
@@ -45,9 +49,15 @@ export const NewHabitPage = () => {
   const onConfirm = async () => {
     if (!habit) return
 
-    const result = await postHabit({ body: habit as Habit })
+    startLoading()
 
-    console.log(result)
+    await postHabit({ body: habit as Habit })
+
+    await reloadHabits()
+
+    stopLoading()
+
+    await Router.push(`/habits`)
   }
 
   return (
@@ -57,10 +67,7 @@ export const NewHabitPage = () => {
       {!suggestion.completed ? (
         <form
           className='flex flex-col gap-6 w-full items-center h-full'
-          onSubmit={(e) => {
-            e.preventDefault()
-            onAiClick()
-          }}>
+          onSubmit={prevent(onAiClick)}>
           <div className='flex flex-col gap-6 w-full items-center justify-center px-10'>
             <input
               type='text'
@@ -83,10 +90,7 @@ export const NewHabitPage = () => {
       ) : (
         <form
           className='flex flex-col gap-6 w-full items-center h-full'
-          onSubmit={(e) => {
-            e.preventDefault()
-            onConfirm()
-          }}>
+          onSubmit={prevent(onConfirm)}>
           <input
             type='text'
             name='name'
