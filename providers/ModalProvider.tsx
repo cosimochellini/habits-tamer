@@ -36,10 +36,10 @@ export const ModalProvider = () => {
 
         {modalOptions?.modalActions && (
           <div className='modal-action'>
-            <button type='button' onClick={onModalClose} className='btn btn-secondary'>
+            <button type='button' onClick={onModalClose} className='btn btn-warning'>
               Close
             </button>
-            <button type='button' onClick={onConfirm} className='btn btn-primary'>
+            <button type='button' onClick={onConfirm} className='btn btn-accent'>
               Confirm
             </button>
           </div>

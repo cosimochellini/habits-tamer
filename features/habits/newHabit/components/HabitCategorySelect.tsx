@@ -12,18 +12,25 @@ export const HabitCategorySelect = ({ value, onChange }: HabitCategorySelectProp
   const options = typedObjectValues(HabitCategory)
 
   return (
-    <select
-      value={value}
-      onChange={(e) => onChange(e.target.value as HabitCategory)}
-      className='select select-accent w-full max-w-xs'>
-      <option disabled selected>
-        Select a category
-      </option>
-      {options.map((option) => (
-        <option key={option} value={option}>
-          {formatEnumValue(option)}
+    <div className='w-full max-w-xs form-control'>
+      <label htmlFor='habitCategory' className='label'>
+        <span className='label-text'>Category</span>
+      </label>
+      <select
+        id='habitCategory'
+        name='habitCategory'
+        value={value}
+        onChange={(e) => onChange(e.target.value as HabitCategory)}
+        className='select select-accent w-full max-w-xs'>
+        <option disabled selected>
+          Select a category
         </option>
-      ))}
-    </select>
+        {options.map((option) => (
+          <option key={option} value={option}>
+            {formatEnumValue(option)}
+          </option>
+        ))}
+      </select>
+    </div>
   )
 }

@@ -10,7 +10,7 @@ import { completions } from '@/istances/openAi'
 import type { InferResponse } from '@/types/api'
 
 const schema = z.object({
-  habit: z.string(),
+  habit: z.string().max(100),
 })
 
 export const GET = withModules([query(schema), auth], async ({ query }) => {
@@ -21,7 +21,7 @@ export const GET = withModules([query(schema), auth], async ({ query }) => {
   type Habit = { name: string  description: string frequency: HabitFrequency  quantity: number habitCategory: HabitCategory } 
   const HabitCategory: ${JSON.stringify(HabitCategory)}
   const HabitFrequency: ${JSON.stringify(HabitFrequency)}
-  Generate a JSON containing a Habit entity based on the habit '${habit}' and add a proper description 
+  Generate a JSON containing a Habit entity based on the habit '${habit}', make sure the description is smaller than 100 characters 
   Return me ONLY the JSON
 `
 

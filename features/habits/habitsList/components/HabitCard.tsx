@@ -6,7 +6,7 @@ import { useModal } from '@/store/modal'
 import { reloadHabits } from '@/store/habits'
 import { startLoading, stopLoading } from '@/store/loading'
 import type { DeleteHabitResult } from '@/app/api/habits/[id]/route'
-import { HabitCategoryIcon } from '@/components/habits/HabitCategoryIcon'
+import { HabitCategoryIconBadge } from '@/components/habits/HabitCategoryIcon'
 import { HabitFrequencyBadge } from '@/components/habits/HabitFrequencyBadge'
 
 interface HabitCardProps {
@@ -43,12 +43,12 @@ export const HabitCard = ({ habit }: HabitCardProps) => {
   return (
     <div className='card w-full bg-primary text-primary-content'>
       <div className='card-body'>
-        <h2 className='card-title'>
-          {habit.name}
-          <HabitCategoryIcon category={habit.habitCategory} />
+        <h2 className='card-title flex justify-between'>
+          <span>{habit.name}</span>
+          <HabitCategoryIconBadge compact category={habit.habitCategory} />
         </h2>
 
-        <p>{habit.description}</p>
+        <p className='italic text-sm color-neutral'>{habit.description}</p>
 
         <div>
           <HabitFrequencyBadge habit={habit} />

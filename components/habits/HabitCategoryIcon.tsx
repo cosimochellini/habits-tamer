@@ -53,13 +53,17 @@ const colorFactory = (category: HabitCategory) => {
   }
 }
 
-export const HabitCategoryIconBadge = ({ category, ...props }: HabitCategoryIconProps) => {
+export const HabitCategoryIconBadge = ({
+  category,
+  compact,
+  ...props
+}: HabitCategoryIconProps & { compact?: boolean }) => {
   const Icon = habitIcons[category]
   const bgColor = useMemo(() => colorFactory(category), [category])
 
   return (
-    <div className={`badge gap-2 px-4 py-3 ${bgColor}`}>
-      {category}
+    <div className={`badge gap-2 px-4 py-3 ${bgColor}`} title={category}>
+      {!compact && category}
       <Icon {...props} />
     </div>
   )
