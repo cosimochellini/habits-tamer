@@ -1,4 +1,5 @@
 import { useSession } from 'next-auth/react'
+import { byString } from 'sort-es'
 
 import { fetcher } from '@/utils/fetch'
 import packageJson from '@/package.json'
@@ -41,11 +42,14 @@ export const SettingsPage = () => {
                 className='select select-accent w-full max-w-xs'
                 value={theme}
                 onChange={(e) => setTheme(e.target.value as Theme)}>
-                {availableThemes.map((t) => (
-                  <option key={t} value={t}>
-                    {capitalize(t)}
-                  </option>
-                ))}
+                {availableThemes
+                  .concat()
+                  .sort(byString())
+                  .map((t) => (
+                    <option key={t} value={t}>
+                      {capitalize(t)}
+                    </option>
+                  ))}
               </select>
             </div>
           </div>

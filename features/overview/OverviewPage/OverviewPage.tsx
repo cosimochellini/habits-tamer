@@ -1,4 +1,4 @@
-import { byNumber, byValue } from 'sort-es'
+import { byString, byValue } from 'sort-es'
 
 import { useHabits } from '@/store/habits'
 
@@ -9,7 +9,7 @@ import classes from './OverviewPage.module.scss'
 export const OverviewPage = () => {
   const habits = useHabits()
 
-  const orderedHabits = habits.sort(byValue((l) => l.habitLogs.length, byNumber({ desc: true })))
+  const orderedHabits = habits.sort(byValue((l) => l.habitCategory, byString({ desc: true })))
 
   return (
     <div className='h-screen flex flex-col gap-2 w-full'>

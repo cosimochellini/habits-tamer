@@ -1,18 +1,24 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 export const useIncrementalValue = (number: number, milliseconds: number) => {
-  const [value, setValue] = useState(0)
-  const [previousValue, setPreviousValue] = useState(0)
+  const previousValueRef = useRef(0)
+  const [value, setValue] = useState(previousValueRef.current - number)
 
   useEffect(() => {
     let startTime: number
     let animationFrameId: number
+    const previousValue = previousValueRef.current
     let startValue = previousValue
 
     if (previousValue === number) {
       // If previous value is equal to the new number,
-      // no need to start from the previous value
+      // reset the animation by setting startValue to 0
       startValue = 0
+    } else {
+      // If previous value is not equal to the new number,
+      // update previousValueRef and start animation from the current value
+      previousValueRef.current = number
+      startValue = value
     }
 
     const startAnimation = (timestamp: number) => {
@@ -26,12 +32,10 @@ export const useIncrementalValue = (number: number, milliseconds: number) => {
       const easingProgress = 1 - (1 - progress) ** 2 // Apply easing function to make it start fast and continue slow
       const nextValue = Math.floor((number - startValue) * easingProgress) + startValue
 
-      if (nextValue <= number) {
-        setValue(nextValue)
-        animationFrameId = requestAnimationFrame(animateValue)
-      } else {
-        setPreviousValue(number)
-      }
+      if (nextValue > number) return
+
+      setValue(nextValue)
+      animationFrameId = requestAnimationFrame(animateValue)
     }
 
     animationFrameId = requestAnimationFrame(startAnimation)
@@ -39,7 +43,8 @@ export const useIncrementalValue = (number: number, milliseconds: number) => {
     return () => {
       cancelAnimationFrame(animationFrameId)
     }
-  }, [milliseconds, number, previousValue])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [number])
 
   return value
 }

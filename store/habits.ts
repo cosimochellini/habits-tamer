@@ -25,12 +25,9 @@ const useStore = create(
 
 export const useHabits = () => {
   const store = useStore()
-  const set = useStore.setState
   const { habits, initialized } = useSSRSafeSelector(store, { habits: [] })
 
-  useEffectOnceWhen(() => {
-    fetchHabits().then(({ habits }) => set({ habits, initialized: true }))
-  }, !initialized)
+  useEffectOnceWhen(reloadHabits, !initialized)
 
   return habits
 }
@@ -43,13 +40,13 @@ export const reloadHabits = () => {
 
 export const optimisticInsertLog = (habitLog: HabitLog) => {
   const set = useStore.setState
-  const snapshot = useStore.getState()
+  const { habits } = useStore.getState()
 
-  const habitToUpdate = snapshot.habits.find((habit) => habit.id === habitLog.habitId)
+  const habitToUpdate = habits.find((habit) => habit.id === habitLog.habitId)
 
   if (habitToUpdate) {
     habitToUpdate.habitLogs.push(habitLog)
 
-    set({ habits: snapshot.habits })
+    set({ habits: structuredClone(habits) })
   }
 }

@@ -1,6 +1,7 @@
+import classNames from 'classnames'
+import { memo, useState } from 'react'
 import type { CSSProperties } from 'react'
-import { memo, useMemo, useState } from 'react'
-import { IconLoader, IconPlus } from '@tabler/icons-react'
+import { IconPlus } from '@tabler/icons-react'
 
 import { fetcher } from '@/utils/fetch'
 import type { HabitResult } from '@/store/habits'
@@ -18,10 +19,9 @@ const postHabitLog = fetcher<PostHabitLogResult, never, PostHabitLogBody>('/api/
 export const HabitOverview = memo(function HabitOverviewComponent({ habit }: HabitOverviewProps) {
   const [logLoading, setLogLoading] = useState(false)
 
-  const percentage = useMemo(() => {
-    const doneLogs = currentPeriodLogs(habit)
-    return (doneLogs.length / habit.quantity) * 100 || 5
-  }, [habit])
+  const doneLogs = currentPeriodLogs(habit)
+
+  const percentage = (doneLogs.length / habit.quantity) * 100 || 5
 
   const value = useIncrementalValue(percentage, percentage * 10)
 
@@ -43,11 +43,20 @@ export const HabitOverview = memo(function HabitOverviewComponent({ habit }: Hab
     '--size': '100%',
   } as CSSProperties
 
+  const habitCompleted = value >= 100
+
   return (
     <div className='w-full pt-10'>
-      <div className='card bg-transparent/10 w-full h-full aspect-square lg:max-w-min'>
+      <div
+        className={classNames('card bg-transparent/10 w-full h-full aspect-square lg:max-w-min', {
+          'border-2 border-accent': habitCompleted,
+        })}>
         <div className='card-body p-3'>
-          <div className='radial-progress after:hidden' style={radialProgress}>
+          <div
+            className={classNames('radial-progress after:hidden', {
+              'text-accent bg-transparent/10': habitCompleted,
+            })}
+            style={radialProgress}>
             <div className='flex gap-2 flex-col items-center'>
               <div className='px-1 capitalize text-balanced'>{habit.name}</div>
             </div>
@@ -61,7 +70,7 @@ export const HabitOverview = memo(function HabitOverviewComponent({ habit }: Hab
               type='button'
               disabled={logLoading}
               className='btn btn-accent btn-sm rounded-full'>
-              {logLoading ? <IconLoader /> : <IconPlus />}
+              <IconPlus className={logLoading ? 'loading' : ''} />
             </button>
           </div>
         </div>
