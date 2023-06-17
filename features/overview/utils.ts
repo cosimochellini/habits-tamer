@@ -23,5 +23,5 @@ const firstDayStrategy = {
 export const currentPeriodLogs = ({ habitLogs, frequency }: HabitResult) => {
   const startDate = removeHours(firstDayStrategy[frequency]())
 
-  return habitLogs.filter((log) => log.date.getTime() >= startDate.getTime()).length
+  return habitLogs.filter((log) => new Date(log.date) >= startDate)
 }

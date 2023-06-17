@@ -15,14 +15,12 @@ interface HabitCardProps {
 
 const deleteHabit = (id: string) => fetcher<DeleteHabitResult>(`/api/habits/${id}`, 'DELETE')()
 
-const DeleteModal = () => {
-  return (
-    <div>
-      <h3 className='font-bold text-lg'>Delete Habit</h3>
-      <p className='py-4'>You are about to delete this habit, are you sure?</p>
-    </div>
-  )
-}
+const DeleteModal = () => (
+  <div>
+    <h3 className='font-bold text-lg'>Delete Habit</h3>
+    <p className='py-4'>You are about to delete this habit, are you sure?</p>
+  </div>
+)
 
 export const HabitCard = ({ habit }: HabitCardProps) => {
   const openModal = useModal(DeleteModal)
@@ -44,7 +42,7 @@ export const HabitCard = ({ habit }: HabitCardProps) => {
     <div className='card w-full bg-primary text-primary-content'>
       <div className='card-body'>
         <h2 className='card-title flex justify-between'>
-          <span>{habit.name}</span>
+          <span className='capitalize'>{habit.name}</span>
           <HabitCategoryIconBadge compact category={habit.habitCategory} />
         </h2>
 

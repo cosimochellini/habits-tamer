@@ -69,7 +69,6 @@ model Habit {
 
 model HabitLog {
   id      String   @id @default(uuid())
-  userId  String // Foreign key to relate HabitLog to User
   habitId String // Foreign key to relate HabitLog to Habit
   date    DateTime
   // Include any other relevant fields

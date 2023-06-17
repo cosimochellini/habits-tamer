@@ -94,19 +94,8 @@ export const SettingsPage = () => {
                     className='input input-bordered w-full max-w-xs'
                   />
                 )}
-
-                <input
-                  type='text'
-                  disabled
-                  value={`Version: ${packageJson.version}`}
-                  className='input input-bordered input-primary w-full max-w-xs'
-                />
+                <kbd className='kbd kbd-md'>{`Version: ${packageJson.version}`}</kbd>
               </div>
-            </div>
-            <div className='card-actions justify-end'>
-              <button type='button' className='btn btn-accent' onClick={saveInfos}>
-                Save
-              </button>
             </div>
           </div>
         </div>

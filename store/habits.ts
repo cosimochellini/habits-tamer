@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import { useEffectOnceWhen } from 'rooks'
 import { persist } from 'zustand/middleware'
+import type { HabitLog } from '@prisma/client'
 
 import { fetcher } from '@/utils/fetch'
 import { useSSRSafeSelector } from '@/hooks/ssrStore'
@@ -38,4 +39,17 @@ export const reloadHabits = () => {
   const set = useStore.setState
 
   return fetchHabits().then(({ habits }) => set({ habits, initialized: true }))
+}
+
+export const optimisticInsertLog = (habitLog: HabitLog) => {
+  const set = useStore.setState
+  const snapshot = useStore.getState()
+
+  const habitToUpdate = snapshot.habits.find((habit) => habit.id === habitLog.habitId)
+
+  if (habitToUpdate) {
+    habitToUpdate.habitLogs.push(habitLog)
+
+    set({ habits: snapshot.habits })
+  }
 }

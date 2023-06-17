@@ -9,3 +9,9 @@ html {
 dialog::backdrop {
   backdrop-filter: blur(3px) !important;
 }
+
+.text-balanced {
+  // madre perdoname por mi vida loca
+  text-wrap: balance;
+  text-align: center;
+}
