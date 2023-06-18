@@ -1,10 +1,5 @@
 import type { Habit } from '@prisma/client'
-import {
-  IconAlertTriangle,
-  IconArrowNarrowRight,
-  IconCirclePlus,
-  IconLoader,
-} from '@tabler/icons-react'
+import { IconAlertTriangle, IconCirclePlus } from '@tabler/icons-react'
 import Router from 'next/router'
 
 import { prevent } from '@/utils/react'
@@ -12,40 +7,19 @@ import { fetcher } from '@/utils/fetch'
 import { useObjectState } from '@/hooks/object'
 import { startLoading, stopLoading } from '@/store/loading'
 import type { PostHabitBody, PostHabitResult } from '@/app/api/habits/route'
-import type { SuggestionQuery, SuggestionResult } from '@/app/api/habits/new/suggestions/route'
 import { reloadHabits } from '@/store/habits'
-
-import { HabitFrequencySelect } from '../components/HabitFrquencySelect'
-import { HabitCategorySelect } from '../components/HabitCategorySelect'
 import { formatFrequency } from '@/utils/enum'
 
-const fetchSuggestions = fetcher<SuggestionResult, SuggestionQuery>('/api/habits/new/suggestions')
+import type { SuggestionState } from '../components/NewHabitSuggestion'
+import { NewHabitSuggestion } from '../components/NewHabitSuggestion'
+import { HabitFrequencySelect } from '../components/HabitFrquencySelect'
+import { HabitCategorySelect } from '../components/HabitCategorySelect'
 
 const postHabit = fetcher<PostHabitResult, never, PostHabitBody>('/api/habits', 'POST')
 
 export const NewHabitPage = () => {
-  const [suggestion, setSuggestion] = useObjectState({
-    loading: false,
-    completed: false,
-    name: '',
-  })
-
   const [habit, setHabit] = useObjectState<Habit>()
-
-  const onAiClick = async () => {
-    if (!suggestion.name) return
-
-    setSuggestion({ loading: true })
-
-    const { suggestedHabit } = await fetchSuggestions({
-      query: { habit: suggestion.name },
-    })
-
-    if (!suggestedHabit) return
-
-    setHabit(suggestedHabit)
-    setSuggestion({ loading: false, completed: true })
-  }
+  const [suggestion, setSuggestion] = useObjectState<SuggestionState>()
 
   const onConfirm = async () => {
     if (!habit) return
@@ -66,28 +40,11 @@ export const NewHabitPage = () => {
       <h1 className='prose-2xl font-semibold'>Add a new habit to track</h1>
 
       {!suggestion.completed ? (
-        <form
-          className='flex flex-col gap-6 w-full items-center h-full'
-          onSubmit={prevent(onAiClick)}>
-          <div className='flex flex-col gap-6 w-full items-center justify-center px-10'>
-            <input
-              type='text'
-              name='habitDescription'
-              value={suggestion.name}
-              onChange={(e) => setSuggestion({ name: e.target.value })}
-              placeholder='eg. "Eat healthy four times a week"'
-              className='input input-bordered input-accent w-full max-w-xs'
-            />
-            <button type='button' className='btn btn-accent w-full' onClick={onAiClick}>
-              Next
-              {suggestion.loading ? (
-                <IconLoader className='animate-spin' />
-              ) : (
-                <IconArrowNarrowRight />
-              )}
-            </button>
-          </div>
-        </form>
+        <NewHabitSuggestion
+          suggestion={suggestion}
+          onHabitSuggested={setHabit}
+          setSuggestion={setSuggestion}
+        />
       ) : (
         <form
           className='flex flex-col gap-3 w-full items-center h-full'

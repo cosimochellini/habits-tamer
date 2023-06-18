@@ -8,8 +8,8 @@ const closeButton = (
   </button>
 )
 export const ModalProvider = () => {
-  const { component, modalOptions, closeModal, open } = useModalStore()
   const modalRef = useRef<HTMLDialogElement>(null)
+  const { component: Component, modalOptions, closeModal, open, updateModalState } = useModalStore()
 
   const onModalClose = () => {
     closeModal('cancel')
@@ -32,7 +32,7 @@ export const ModalProvider = () => {
       <form method='dialog' className='modal-box' onSubmit={onModalClose}>
         {modalOptions?.closeButton && closeButton}
 
-        {component()}
+        <Component onClose={onModalClose} onConfirm={onConfirm} onChangeState={updateModalState} />
 
         {modalOptions?.modalActions && (
           <div className='modal-action'>

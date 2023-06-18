@@ -1,21 +1,27 @@
 import { create } from 'zustand'
-import type { ReactNode } from 'react'
+import type { FC, ReactNode } from 'react'
 
 interface ModalOptions {
   outsideClick?: boolean
   modalActions?: boolean
   closeButton?: boolean
 }
-
+export interface ModalComponentProps<T> {
+  onClose: () => void
+  onConfirm: () => void
+  onChangeState: (state: Partial<T>) => void
+}
 type CloseReason = 'confirm' | 'cancel'
 
 interface State {
   open: boolean
-  component: () => ReactNode
+  component: (props: ModalComponentProps<unknown>) => ReactNode
   modalOptions?: ModalOptions
   closeReason?: CloseReason
   closeModal: (reason: CloseReason) => void
-  openModal: (component: () => ReactNode, options?: ModalOptions) => void
+  openModal: <T>(component: FC<ModalComponentProps<T>>, options?: ModalOptions) => void
+  modalState: Record<string, unknown>
+  updateModalState: (state: Record<string, unknown>) => void
 }
 
 const useStore = create<State>((set) => ({
@@ -28,19 +34,26 @@ const useStore = create<State>((set) => ({
   openModal: (component, modalOptions) => {
     set({ open: true, component, modalOptions })
   },
+  modalState: {},
+  updateModalState: (state) =>
+    set(({ modalState }) => ({ modalState: { ...modalState, ...state } })),
 }))
 
 export const useModalStore = useStore
 
-export const useModal = (component: () => ReactNode) => {
+type ModalResult<T> = { reason: 'cancel' } | { reason: 'confirm'; data: T }
+
+export const useModal = <TProps>(component: FC<ModalComponentProps<TProps>>) => {
   const openModal = useStore((x) => x.openModal)
 
   return (options?: ModalOptions) => {
-    openModal(component, options)
+    openModal<TProps>(component, options)
 
-    return new Promise<CloseReason>((resolve) => {
-      useStore.subscribe(({ open, closeReason }) => {
-        if (!open && !!closeReason) resolve(closeReason)
+    return new Promise<ModalResult<TProps>>((resolve) => {
+      useStore.subscribe(({ open, closeReason, modalState }) => {
+        if (open) return
+        if (closeReason === 'confirm') resolve({ reason: closeReason, data: modalState as TProps })
+        if (closeReason === 'cancel') resolve({ reason: closeReason })
       })
     })
   }

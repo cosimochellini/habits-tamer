@@ -25,9 +25,9 @@ const DeleteModal = () => (
 export const HabitCard = ({ habit }: HabitCardProps) => {
   const openModal = useModal(DeleteModal)
   const onDeleteClick = async () => {
-    const result = await openModal({ outsideClick: true, modalActions: true })
+    const { reason } = await openModal({ outsideClick: true, modalActions: true })
 
-    if (result === 'cancel') return
+    if (reason === 'cancel') return
 
     startLoading()
 

@@ -1,7 +1,7 @@
 import classNames from 'classnames'
-import { memo, useState } from 'react'
 import type { CSSProperties } from 'react'
 import { IconPlus } from '@tabler/icons-react'
+import { memo, useMemo, useState } from 'react'
 
 import { fetcher } from '@/utils/fetch'
 import type { HabitResult } from '@/store/habits'
@@ -16,20 +16,24 @@ interface HabitOverviewProps {
 }
 
 const postHabitLog = fetcher<PostHabitLogResult, never, PostHabitLogBody>('/api/habitLogs', 'POST')
+
 export const HabitOverview = memo(function HabitOverviewComponent({ habit }: HabitOverviewProps) {
   const [logLoading, setLogLoading] = useState(false)
 
-  const doneLogs = currentPeriodLogs(habit)
+  const doneLogs = useMemo(() => currentPeriodLogs(habit), [habit])
 
-  const percentage = (doneLogs.length / habit.quantity) * 100 || 5
+  const percentage = useMemo(
+    () => (doneLogs.length / habit.quantity) * 100 || 5,
+    [doneLogs.length, habit.quantity],
+  )
 
   const value = useIncrementalValue(percentage, percentage * 10)
 
-  const logHabit = async () => {
+  const logHabit = async (habitId: string) => {
     setLogLoading(true)
 
     const { result } = await postHabitLog({
-      body: { habitId: habit.id },
+      body: { habitId },
     })
 
     if (result) optimisticInsertLog(result)
@@ -58,7 +62,10 @@ export const HabitOverview = memo(function HabitOverviewComponent({ habit }: Hab
             })}
             style={radialProgress}>
             <div className='flex gap-2 flex-col items-center'>
-              <div className='px-1 capitalize text-balanced'>{habit.name}</div>
+              <div className='px-1 capitalize text-balanced text-center'>{habit.name}</div>
+              <div>
+                {doneLogs.length}/{habit.quantity}
+              </div>
             </div>
           </div>
           <div className='absolute -top-2 -left-2'>
@@ -66,7 +73,7 @@ export const HabitOverview = memo(function HabitOverviewComponent({ habit }: Hab
           </div>
           <div className='absolute -bottom-2 -right-2'>
             <button
-              onClick={logHabit}
+              onClick={() => logHabit(habit.id)}
               type='button'
               disabled={logLoading}
               className='btn btn-accent btn-sm rounded-full'>
