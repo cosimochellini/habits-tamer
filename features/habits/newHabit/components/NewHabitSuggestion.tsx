@@ -49,8 +49,6 @@ export const NewHabitSuggestion = ({
   const onSuggestionClick = async () => {
     const result = await openModal({ outsideClick: true })
 
-    console.log(result)
-
     if (result.reason === 'cancel') return
 
     if (result.data) onSuggestionSelected(result.data.habit)

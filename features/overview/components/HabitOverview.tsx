@@ -76,7 +76,7 @@ export const HabitOverview = memo(function HabitOverviewComponent({ habit }: Hab
               onClick={() => logHabit(habit.id)}
               type='button'
               disabled={logLoading}
-              className='btn btn-accent btn-sm rounded-full'>
+              className='btn btn-accent btn-sm'>
               <IconPlus className={logLoading ? 'loading' : ''} />
             </button>
           </div>

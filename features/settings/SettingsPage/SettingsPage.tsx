@@ -32,7 +32,7 @@ export const SettingsPage = () => {
       <h1 className='prose-2xl font-semibold text-center'>Settings</h1>
 
       <div className={`flex flex-col gap-4 px-2 ${classes.container}`}>
-        <div className='card card-bordered bg-base-200 p-4 rounded-xl'>
+        <div className='card card-bordered bg-base-200 p-4'>
           <div className='card-body'>
             <h2 className='card-title'>Appearance</h2>
             <div>
@@ -55,7 +55,7 @@ export const SettingsPage = () => {
           </div>
         </div>
 
-        <div className='card card-bordered bg-base-200 p-4 rounded-xl'>
+        <div className='card card-bordered bg-base-200 p-4'>
           <div className='card-body'>
             <h2 className='card-title'>User information</h2>
             <div>
@@ -85,7 +85,7 @@ export const SettingsPage = () => {
           </div>
         </div>
 
-        <div className='card card-bordered bg-base-200 p-4 rounded-xl'>
+        <div className='card card-bordered bg-base-200 p-4'>
           <div className='card-body'>
             <h2 className='card-title'>App settings</h2>
             <div>
