@@ -20,7 +20,7 @@ export const Navbar = () => {
       </div>
       <div className='navbar-end'>
         <div className='avatar placeholder'>
-          <div className='bg-primary/30 text-primary w-10 ring ring-primary ring-offset-base-100 ring-offset-2'>
+          <div className='bg-primary/30 text-primary w-10 ring ring-primary ring-offset-base-100 ring-offset-2 rounded-full'>
             <span className='text-xl'>{initials(data?.user?.name)} </span>
           </div>
         </div>
