@@ -44,7 +44,6 @@ export const HabitOverview = memo(function HabitOverviewComponent({ habit }: Hab
   const radialProgress = {
     '--value': value.toFixed(0),
     '--thickness': '0.6rem',
-    '--size': '99%',
   } as CSSProperties
 
   const habitCompleted = value >= 100
@@ -52,22 +51,19 @@ export const HabitOverview = memo(function HabitOverviewComponent({ habit }: Hab
   return (
     <div className='w-full pt-10'>
       <div
-        className={classNames(
-          'card bg-transparent/10 w-full h-full m-auto aspect-square max-w-xs',
-          {
-            'border-2 border-accent': habitCompleted,
-          },
-        )}>
+        className={classNames('card bg-transparent/10 w-full h-full m-auto aspect-square', {
+          'border-2 border-accent': habitCompleted,
+        })}>
         <div className='card-body p-3'>
           <div
-            className={classNames('radial-progress after:hidden', {
+            className={classNames('radial-progress after:hidden w-full h-full m-auto', {
               'text-accent bg-transparent/10': habitCompleted,
             })}
             style={radialProgress}>
             <div className='flex gap-2 flex-col items-center'>
-              <div className='px-1 capitalize text-balanced text-center'>{habit.name}</div>
+              <div className='px-1 capitalize text-balanced text-center md:mx-2'>{habit.name}</div>
               <div>
-                {doneLogs.length}/{habit.quantity}
+                {doneLogs.length} / {habit.quantity}
               </div>
             </div>
           </div>

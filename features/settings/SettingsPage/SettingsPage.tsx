@@ -32,7 +32,7 @@ export const SettingsPage = () => {
       <h1 className='prose-2xl font-semibold text-center'>Settings</h1>
 
       <div
-        className={`flex flex-col gap-4 px-2 md:grid md:grid-cols-2 lg:grid-cols-3 justify-center ${classes.container}`}>
+        className={`flex flex-col gap-4 px-2 md:grid md:grid-cols-2 justify-center ${classes.container}`}>
         <div className='card card-bordered bg-base-200 p-4'>
           <div className='card-body'>
             <h2 className='card-title'>Appearance</h2>

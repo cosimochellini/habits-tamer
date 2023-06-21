@@ -5,9 +5,9 @@ import { useRouter } from 'next/router'
 
 import { useTheme } from '@/store/theme'
 import { Sidebar } from '@/layouts/default/component/Sidebar'
+import { paths } from '@/config/navbar'
 
 import { Navbar } from './Navbar'
-import { paths } from '@/config/navbar'
 
 export const DefaultLayout = ({ children }: { children: ReactNode }) => {
   useTheme()
@@ -19,7 +19,8 @@ export const DefaultLayout = ({ children }: { children: ReactNode }) => {
       <Navbar />
       <div className='md:flex md:flex-row'>
         <Sidebar />
-        <div className='bg-gradient-to-t from-base to-base-100 pb-20 min-h-screen py-3 lg:py-6 flex-1 md:mx-8 lg:mx-16 xl:mx-24'>
+
+        <div className='bg-gradient-to-t from-base to-base-100 pb-20 min-h-screen h-full py-3 lg:py-6 flex-1 md:mx-8 lg:mx-16 xl:mx-24'>
           {children}
         </div>
       </div>

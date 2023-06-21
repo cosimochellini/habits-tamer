@@ -1,14 +1,14 @@
 import Link from 'next/link'
-
-import { paths } from '@/config/navbar'
 import { useRouter } from 'next/router'
 import classNames from 'classnames'
+
+import { paths } from '@/config/navbar'
 
 export const Sidebar = () => {
   const router = useRouter()
 
   return (
-    <aside className='top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 hidden md:block'>
+    <aside className='w-56 h-screen transition-transform -translate-x-full sm:translate-x-0 hidden md:block'>
       <div className='h-full px-3 py-4 overflow-y-auto bg-base-200'>
         <ul className='space-y-2 font-medium'>
           {paths.map((path) => {

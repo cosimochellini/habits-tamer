@@ -11,9 +11,13 @@ export const Navbar = () => {
   const { data } = useSession()
 
   return (
-    <div className='navbar bg-base-200'>
-      <div className='navbar-start' />
-      <div className='navbar-center'>
+    <div className='navbar bg-base-200 md:border border-b-base-content'>
+      <div className='navbar-start hidden md:block'>
+        <Link href='/' className='btn btn-ghost normal-case text-xl'>
+          Habit Tamer
+        </Link>
+      </div>
+      <div className='navbar-center block md:hidden'>
         <Link href='/' className='btn btn-ghost normal-case text-xl'>
           Habit Tamer
         </Link>
