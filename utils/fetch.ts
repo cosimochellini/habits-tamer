@@ -13,4 +13,4 @@ export const fetcher =
       method,
       headers,
       body: JSON.stringify(options?.body),
-    }).then((res) => res.json() as Promise<TResult>)
+    }).then((r) => (r.ok ? (r.json() as Promise<TResult>) : Promise.reject(r)))
