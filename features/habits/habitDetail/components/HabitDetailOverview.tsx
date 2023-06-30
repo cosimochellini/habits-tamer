@@ -8,7 +8,7 @@ interface HabitDetailOverviewProps {
 export const HabitDetailOverview = ({ habit }: HabitDetailOverviewProps) => (
   <div className='card bg-base-300 card-bordered'>
     <div className='card-body'>
-      <h2 className='card-title text-balanced justify-between'>
+      <h2 className='card-title text-balanced justify-between capitalize'>
         {habit.name}
         <HabitCategoryIconBadge compact category={habit.habitCategory} />
       </h2>
