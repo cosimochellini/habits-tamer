@@ -6,11 +6,11 @@ interface HabitDetailOverviewProps {
   habit: HabitResult
 }
 export const HabitDetailOverview = ({ habit }: HabitDetailOverviewProps) => (
-  <div className='card bg-base-200 card-bordered'>
+  <div className='card bg-base-300 card-bordered'>
     <div className='card-body'>
-      <h2 className='card-title text-balanced'>
+      <h2 className='card-title text-balanced justify-between'>
         {habit.name}
-        <HabitCategoryIconBadge category={habit.habitCategory} />
+        <HabitCategoryIconBadge compact category={habit.habitCategory} />
       </h2>
       <p className='py-3 text-balanced'>{habit.description}</p>
       <div className='card-actions justify-end'>

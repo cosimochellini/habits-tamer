@@ -12,6 +12,8 @@ import {
   IconHeartbeat,
 } from '@tabler/icons-react'
 
+import { formatEnumValue } from '@/utils/enum'
+
 interface HabitCategoryIconProps extends TablerIconsProps {
   category: HabitCategory
 }
@@ -63,7 +65,7 @@ export const HabitCategoryIconBadge = ({
 
   return (
     <div className={`badge gap-2 px-4 py-3 ${bgColor}`} title={category}>
-      {!compact && category}
+      {!compact && formatEnumValue(category)}
       <Icon {...props} />
     </div>
   )

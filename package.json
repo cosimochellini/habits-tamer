@@ -1,6 +1,6 @@
 {
   "name": "habits-tamer",
-  "version": "0.8.8",
+  "version": "0.8.12",
   "license": "MIT",
   "author": "Cosimo Chellini <cosimo.chellini@gmail.com>",
   "private": false,
@@ -21,6 +21,7 @@
     "@prisma/client": "4.16.1",
     "@tabler/icons-react": "^2.23.0",
     "classnames": "2.3.2",
+    "date-fns": "^2.30.0",
     "next": "13.4.7",
     "next-auth": "^4.22.1",
     "nodemailer": "^6.9.3",

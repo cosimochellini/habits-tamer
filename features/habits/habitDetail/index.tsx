@@ -2,6 +2,7 @@ import { useRouter } from 'next/router'
 
 import { useHabits } from '@/store/habits'
 import { HabitDetailOverview } from '@/features/habits/habitDetail/components/HabitDetailOverview'
+import { HabitLogsOverview } from '@/features/habits/habitDetail/components/HabitLogsOverview'
 
 export const HabitDetail = () => {
   const router = useRouter()
@@ -14,8 +15,9 @@ export const HabitDetail = () => {
   if (!actualHabit) return null
 
   return (
-    <div>
+    <div className='flex flex-col gap-4'>
       <HabitDetailOverview habit={actualHabit} />
+      <HabitLogsOverview habit={actualHabit} />
     </div>
   )
 }

@@ -21,3 +21,11 @@ export const relativeTime = (date: Date | number) => {
 
   return rtf.format(Math.floor(deltaSeconds / divisor), units[unitIndex])
 }
+
+export const today = () => new Date()
+export const firstDayOfTheWeek = (date = new Date()) =>
+  new Date(date.setDate(date.getDate() - date.getDay() + 1))
+
+export const firstDayOfTheMonth = () => new Date(new Date().setDate(1))
+
+export const firstDayOfTheYear = () => new Date(new Date().setMonth(0))

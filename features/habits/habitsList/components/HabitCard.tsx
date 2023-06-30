@@ -56,7 +56,7 @@ export const HabitCard = ({ habit }: HabitCardProps) => {
           <button type='button' className='btn btn-sm btn-accent' onClick={onDeleteClick}>
             Delete
           </button>
-          <Link href='/' className='btn btn-sm btn-secondary'>
+          <Link href={`/habits/${habit.id}`} className='btn btn-sm btn-secondary'>
             Edit
           </Link>
         </div>
