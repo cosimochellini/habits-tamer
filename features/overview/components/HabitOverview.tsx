@@ -7,7 +7,7 @@ import { IconClock, IconInfoCircle, IconPlus } from '@tabler/icons-react'
 import { fetcher } from '@/utils/fetch'
 import { stopPropagation } from '@/utils/react'
 import type { HabitResult } from '@/store/habits'
-import { getRelativeTimeString } from '@/utils/date'
+import { relativeTime } from '@/utils/date'
 import { optimisticInsertLog } from '@/store/habits'
 import { currentPeriodLogs } from '@/features/overview/utils'
 import { useIncrementalValue } from '@/hooks/incrementalValue'
@@ -121,6 +121,8 @@ const HabitOverviewBack = ({ habit }: HabitOverviewProps) => {
     [habit],
   )
 
+  const formattedLastLog = useMemo(() => (lastLog ? relativeTime(lastLog.date) : ''), [lastLog])
+
   return (
     <div
       className={classNames(
@@ -135,7 +137,7 @@ const HabitOverviewBack = ({ habit }: HabitOverviewProps) => {
           <div className='badge badge-accent gap-2 p-4'>
             <IconClock />
 
-            {lastLog && getRelativeTimeString(lastLog.date)}
+            {formattedLastLog}
           </div>
         </div>
       </div>

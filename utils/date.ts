@@ -7,7 +7,7 @@ const rtf = new Intl.RelativeTimeFormat(safeNavigator?.language ?? 'en', { numer
 const cutoffs = [60, 3600, 86400, 86400 * 7, 86400 * 30, 86400 * 365, Infinity] as const
 const units = ['second', 'minute', 'hour', 'day', 'week', 'month', 'year'] as const
 
-export const getRelativeTimeString = (date: Date | number) => {
+export const relativeTime = (date: Date | number) => {
   const timeMs = new Date(date).getTime()
 
   const deltaSeconds = Math.round((timeMs - Date.now()) / 1000)

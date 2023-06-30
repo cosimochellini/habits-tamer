@@ -62,6 +62,8 @@ model Habit {
   quantity     Int
   userId       String // Foreign key to relate Habit to User
   habitCategory HabitCategory // Habit category as an enum
+  createdAt DateTime @default(now())
+  updatedAt DateTime?
 
   user      User       @relation(fields: [userId], references: [id])
   habitLogs HabitLog[]
