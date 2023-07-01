@@ -55,6 +55,7 @@ interface WeekRangeProps {
 const WeekRange = ({ habit, range }: WeekRangeProps) => {
   const start = range.at(0)
   const end = range.at(-1)
+  const todayDate = today()
 
   return (
     <div className='w-full py-2'>
@@ -67,12 +68,15 @@ const WeekRange = ({ habit, range }: WeekRangeProps) => {
             isSameDay(new Date(log.date), day),
           )
 
+          const isToday = isSameDay(new Date(day), todayDate)
+
           return (
             <div
               key={day.getTime()}
               className={classNames('badge md:p-3 xl:p-4', {
                 'badge-success': habitDoneInThisDay,
-                'badge-outline': !habitDoneInThisDay,
+                'badge-outline': !isToday && !habitDoneInThisDay,
+                'badge-accent': isToday,
               })}>
               {week.at(day.getDay())}
             </div>

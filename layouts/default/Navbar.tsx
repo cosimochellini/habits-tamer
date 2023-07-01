@@ -1,5 +1,6 @@
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
+import { IconUser } from '@tabler/icons-react'
 
 const initials = (name: string | undefined | null) =>
   name
@@ -9,6 +10,8 @@ const initials = (name: string | undefined | null) =>
 
 export const Navbar = () => {
   const { data } = useSession()
+
+  const avatarInitials = initials(data?.user?.name)
 
   return (
     <div className='navbar bg-base-200 md:border border-b-base-content'>
@@ -25,7 +28,9 @@ export const Navbar = () => {
       <div className='navbar-end'>
         <div className='avatar placeholder'>
           <div className='bg-primary/30 text-primary w-10 ring ring-primary ring-offset-base-100 ring-offset-2 rounded-full'>
-            <span className='text-xl'>{initials(data?.user?.name)} </span>
+            <Link href='/settings' className='text-xl'>
+              {avatarInitials ?? <IconUser />}
+            </Link>
           </div>
         </div>
       </div>
