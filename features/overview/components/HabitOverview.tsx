@@ -119,7 +119,11 @@ const HabitOverviewBack = ({ habit }: HabitOverviewProps) => {
     [habit],
   )
 
-  const formattedLastLog = useMemo(() => (lastLog ? relativeTime(lastLog.date) : ''), [lastLog])
+  const formattedValue = useMemo(() => {
+    if (!lastLog) return ''
+
+    return relativeTime(lastLog.date)
+  }, [lastLog])
 
   return (
     <div
@@ -132,10 +136,10 @@ const HabitOverviewBack = ({ habit }: HabitOverviewProps) => {
         <div className='flex gap-2 flex-col items-center'>
           <HabitFrequencyBadge habit={habit} icon />
 
-          <div className='badge badge-accent gap-2 p-4'>
+          <div className='badge badge-accent px-4 py-3 gap-2'>
             <IconClock />
 
-            {formattedLastLog}
+            <div className='flex-1 prose prose-sm text-xs'>{formattedValue}</div>
           </div>
         </div>
       </div>
