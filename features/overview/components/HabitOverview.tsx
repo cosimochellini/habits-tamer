@@ -32,10 +32,8 @@ export const HabitOverview = memo(function HabitOverviewComponent({ habit }: Hab
   }
 
   return (
-    <button
-      type='button'
-      className={classNames('w-full pt-10', classes.deck)}
-      onClick={onHabitCardClick}>
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
+    <div className={classNames('w-full pt-10', classes.deck)} onClick={onHabitCardClick}>
       <div className={classNames(classes.card, { [classes.flipped]: flipped })}>
         <HabitOverviewFront habit={habit} />
         <HabitOverviewBack habit={habit} />
@@ -48,7 +46,7 @@ export const HabitOverview = memo(function HabitOverviewComponent({ habit }: Hab
           </Link>
         </div>
       </div>
-    </button>
+    </div>
   )
 })
 

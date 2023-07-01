@@ -17,12 +17,12 @@ export const Navbar = () => {
     <div className='navbar bg-base-200 md:border border-b-base-content'>
       <div className='navbar-start hidden md:block'>
         <Link href='/' className='btn btn-ghost normal-case text-xl'>
-          Habit Tamer
+          Habits Tamer
         </Link>
       </div>
       <div className='navbar-center block md:hidden'>
         <Link href='/' className='btn btn-ghost normal-case text-xl'>
-          Habit Tamer
+          Habits Tamer
         </Link>
       </div>
       <div className='navbar-end'>
