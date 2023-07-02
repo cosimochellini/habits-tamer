@@ -5,6 +5,7 @@ interface ModalOptions {
   outsideClick?: boolean
   modalActions?: boolean
   closeButton?: boolean
+  additionalState?: Record<string, unknown>
 }
 export interface ModalComponentProps<T> {
   onClose: () => void
@@ -28,12 +29,14 @@ const useStore = create<State>((set) => ({
   open: false,
 
   component: () => null,
+
   closeModal: (closeReason) => {
-    set({ open: false, closeReason })
+    set({ open: false, closeReason, modalState: {} })
   },
   openModal: (component, modalOptions) => {
     set({ open: true, component, modalOptions })
   },
+
   modalState: {},
   updateModalState: (state) =>
     set(({ modalState }) => ({ modalState: { ...modalState, ...state } })),
@@ -58,3 +61,5 @@ export const useModal = <TProps>(component: FC<ModalComponentProps<TProps>>) => 
     })
   }
 }
+
+export const useModalState = <T>() => useStore((x) => x.modalOptions?.additionalState) as Partial<T>

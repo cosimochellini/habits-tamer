@@ -9,16 +9,17 @@ import type { InferResponse } from '@/types/api'
 
 const habitLogSchema = z.object({
   habitId: z.string(),
+  date: z.coerce.date().optional(),
 })
 export const POST = withModules([auth, body(habitLogSchema)], async ({ email, body }) => {
-  const { habitId } = body
+  const { habitId, date } = body
 
   const habit = await prismaClient.habit.findFirstOrThrow({
     where: { id: habitId, user: { email } },
   })
 
   const habitLog = {
-    date: new Date(),
+    date: date ?? new Date(),
     habit: { connect: { id: habit.id } },
   }
 
