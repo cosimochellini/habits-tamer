@@ -44,7 +44,7 @@ const useStore = create<State>((set) => ({
 
 export const useModalStore = useStore
 
-type ModalResult<T> = { reason: 'cancel' } | { reason: 'confirm'; data: T }
+export type ModalResult<T> = { reason: 'cancel' } | { reason: 'confirm'; data: T }
 
 export const useModal = <TProps>(component: FC<ModalComponentProps<TProps>>) => {
   const openModal = useStore((x) => x.openModal)

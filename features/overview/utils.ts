@@ -6,10 +6,9 @@ import {
   firstDayOfTheWeek,
   firstDayOfTheYear,
   greater,
+  removeHours,
   today,
 } from '@/utils/date'
-
-const removeHours = (date: Date) => new Date(date.setHours(0, 0, 0, 0))
 
 const firstDayStrategy = {
   DAILY: today,

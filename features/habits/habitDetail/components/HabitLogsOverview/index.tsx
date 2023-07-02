@@ -1,16 +1,20 @@
 import { useMemo } from 'react'
 import { byDate, byValue } from 'sort-es'
 import { IconCalendarCheck } from '@tabler/icons-react'
+import classNames from 'classnames'
 
 import type { HabitResult } from '@/store/habits'
-import { firstDayOfTheWeek, today } from '@/utils/date'
-import { WeekRange } from '@/features/habits/habitDetail/components/WeekRange'
+import { firstDayOfTheWeek, removeHours, today } from '@/utils/date'
+
+import { WeekRange } from '../WeekRange'
 
 import { dateRange } from './utils/ranges'
+import classes from './index.module.scss'
 
 interface HabitLogOverviewProps {
   habit: HabitResult
 }
+
 export const HabitLogsOverview = ({ habit }: HabitLogOverviewProps) => {
   const oldestLog = useMemo(
     () =>
@@ -24,9 +28,9 @@ export const HabitLogsOverview = ({ habit }: HabitLogOverviewProps) => {
   const ranges = useMemo(() => {
     if (!oldestLog) return []
 
-    const startingDate = firstDayOfTheWeek(new Date(oldestLog.date))
+    const startingDate = removeHours(firstDayOfTheWeek(new Date(oldestLog.date)))
 
-    return dateRange(startingDate, today(), 7)
+    return dateRange(startingDate, removeHours(today()), 7)
   }, [oldestLog])
 
   return (
@@ -35,7 +39,7 @@ export const HabitLogsOverview = ({ habit }: HabitLogOverviewProps) => {
         <h2 className='card-title text-balanced'>
           Logs <IconCalendarCheck />
         </h2>
-        <div className='card-actions justify-end'>
+        <div className={classNames('card-actions justify-end', classes.container)}>
           {ranges.map((range) => (
             <WeekRange habit={habit} range={range} key={range.at(0)?.getTime()} />
           ))}

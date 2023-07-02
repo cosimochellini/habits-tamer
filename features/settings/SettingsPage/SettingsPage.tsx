@@ -7,6 +7,7 @@ import type { Theme } from '@/store/theme'
 import { capitalize } from '@/utils/string'
 import { useObjectState } from '@/hooks/object'
 import { availableThemes, useTheme } from '@/store/theme'
+import { mediumDateFormatter } from '@/utils/internazionalitazion'
 import type { PatchUserBody, PatchUserResult } from '@/app/api/users/route'
 
 import classes from './SettingsPage.module.scss'
@@ -95,7 +96,9 @@ export const SettingsPage = () => {
                   <input
                     type='text'
                     disabled
-                    value={`Expires: ${new Date(session?.expires).toDateString()}`}
+                    value={`Token expires: ${mediumDateFormatter.format(
+                      new Date(session?.expires),
+                    )}`}
                     className='input input-bordered w-full max-w-xs'
                   />
                 )}
