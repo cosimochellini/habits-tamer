@@ -22,7 +22,7 @@ export const removeHours = (date: Date) => new Date(date.setHours(0, 0, 0, 0))
 
 export const today = () => new Date()
 export const firstDayOfTheWeek = (date = new Date()) =>
-  new Date(date.setDate(date.getDate() - date.getDay() + 1))
+  new Date(date.setDate(date.getDate() - ((date.getDay() + 6) % 7)))
 
 export const firstDayOfTheMonth = () => new Date(new Date().setDate(1))
 
