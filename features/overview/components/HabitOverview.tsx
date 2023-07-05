@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import classNames from 'classnames'
+import { isSameDay } from 'date-fns'
 import { byDate, byValue } from 'sort-es'
 import { memo, useMemo, useState } from 'react'
 import { IconClock, IconInfoCircle, IconPlus } from '@tabler/icons-react'
@@ -59,6 +60,11 @@ const HabitOverviewFront = ({ habit }: HabitOverviewProps) => {
     [doneLogs.length, habit.quantity],
   )
 
+  const lastLogToday = useMemo(() => {
+    const today = new Date()
+    return doneLogs.some((log) => isSameDay(new Date(log.date), today))
+  }, [doneLogs])
+
   const value = useIncrementalValue(percentage, percentage * 10)
   const habitCompleted = value >= 100
   const logHabit = async (habitId: string) => {
@@ -100,7 +106,9 @@ const HabitOverviewFront = ({ habit }: HabitOverviewProps) => {
             onClick={stopPropagation(() => logHabit(habit.id))}
             type='button'
             disabled={logLoading}
-            className='btn btn-accent btn-sm'>
+            className={classNames('btn btn-accent btn-sm transition-opacity', {
+              hidden: lastLogToday,
+            })}>
             <IconPlus className={logLoading ? 'loading' : ''} />
           </button>
         </div>
