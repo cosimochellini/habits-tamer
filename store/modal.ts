@@ -1,15 +1,15 @@
 import { create } from 'zustand'
 import type { FC, ReactNode } from 'react'
 
-interface ModalOptions {
+interface ModalOptions<TState = Record<string, unknown>> {
   outsideClick?: boolean
   modalActions?: boolean
   closeButton?: boolean
-  additionalState?: Record<string, unknown>
+  additionalState?: TState
 }
 export interface ModalComponentProps<T> {
-  onClose: () => void
-  onConfirm: () => void
+  onClose: (state?: Partial<T>) => void
+  onConfirm: (state?: Partial<T>) => void
   onChangeState: (state: Partial<T>) => void
 }
 type CloseReason = 'confirm' | 'cancel'
@@ -31,7 +31,8 @@ const useStore = create<State>((set) => ({
   component: () => null,
 
   closeModal: (closeReason) => {
-    set({ open: false, closeReason, modalState: {} })
+    set({ open: false, closeReason })
+    set({ modalState: {} }) // I'll do it in a separate commit to return the original state, then I'll clean it
   },
   openModal: (component, modalOptions) => {
     set({ open: true, component, modalOptions })
@@ -48,14 +49,15 @@ export type ModalResult<T> = { reason: 'cancel' } | { reason: 'confirm'; data: T
 
 export const useModal = <TProps>(component: FC<ModalComponentProps<TProps>>) => {
   const openModal = useStore((x) => x.openModal)
-
-  return (options?: ModalOptions) => {
-    openModal<TProps>(component, options)
+  return <TState = Record<string, unknown>>(options?: ModalOptions<TState>) => {
+    openModal<TProps>(component, options as ModalOptions)
 
     return new Promise<ModalResult<TProps>>((resolve) => {
       useStore.subscribe(({ open, closeReason, modalState }) => {
         if (open) return
-        if (closeReason === 'confirm') resolve({ reason: closeReason, data: modalState as TProps })
+        if (closeReason === 'confirm') {
+          resolve({ reason: closeReason, data: modalState as TProps })
+        }
         if (closeReason === 'cancel') resolve({ reason: closeReason })
       })
     })

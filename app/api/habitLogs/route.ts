@@ -7,11 +7,11 @@ import { withModules } from '@/ssr/modules'
 import { prismaClient } from '@/prisma/client'
 import type { InferResponse } from '@/types/api'
 
-const habitLogSchema = z.object({
+const postHabitLogSchema = z.object({
   habitId: z.string(),
   date: z.coerce.date().optional(),
 })
-export const POST = withModules([auth, body(habitLogSchema)], async ({ email, body }) => {
+export const POST = withModules([auth, body(postHabitLogSchema)], async ({ email, body }) => {
   const { habitId, date } = body
 
   const habit = await prismaClient.habit.findFirstOrThrow({
@@ -31,4 +31,24 @@ export const POST = withModules([auth, body(habitLogSchema)], async ({ email, bo
 })
 
 export type PostHabitLogResult = InferResponse<typeof POST>
-export type PostHabitLogBody = z.infer<typeof habitLogSchema>
+export type PostHabitLogBody = z.infer<typeof postHabitLogSchema>
+
+const deleteHabitLogSchema = z.object({
+  habitLogId: z.string(),
+})
+export const DELETE = withModules([auth, body(deleteHabitLogSchema)], async ({ email, body }) => {
+  const { habitLogId } = body
+
+  const logToDelete = await prismaClient.habitLog.findFirstOrThrow({
+    where: { id: habitLogId, habit: { user: { email } } },
+  })
+
+  const result = await prismaClient.habitLog.delete({
+    where: { id: logToDelete.id },
+  })
+
+  return ok({ result })
+})
+
+export type DeleteHabitLogResult = InferResponse<typeof DELETE>
+export type DeleteHabitLogBody = z.infer<typeof deleteHabitLogSchema>

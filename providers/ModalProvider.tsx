@@ -11,11 +11,13 @@ export const ModalProvider = () => {
   const modalRef = useRef<HTMLDialogElement>(null)
   const { component: Component, modalOptions, closeModal, open, updateModalState } = useModalStore()
 
-  const onModalClose = () => {
+  const onModalClose = (data?: Record<string, unknown>) => {
+    updateModalState(data ?? {})
     closeModal('cancel')
   }
 
-  const onConfirm = () => {
+  const onConfirm = (data?: Record<string, unknown>) => {
+    updateModalState(data ?? {})
     closeModal('confirm')
   }
 
@@ -29,17 +31,17 @@ export const ModalProvider = () => {
 
   return (
     <dialog ref={modalRef} className='modal'>
-      <form method='dialog' className='modal-box' onSubmit={onModalClose}>
+      <form method='dialog' className='modal-box' onSubmit={() => onModalClose()}>
         {modalOptions?.closeButton && closeButton}
 
         <Component onClose={onModalClose} onConfirm={onConfirm} onChangeState={updateModalState} />
 
         {modalOptions?.modalActions && (
           <div className='modal-action'>
-            <button type='button' onClick={onModalClose} className='btn btn-warning'>
+            <button type='button' onClick={() => onModalClose()} className='btn btn-warning'>
               Close
             </button>
-            <button type='button' onClick={onConfirm} className='btn btn-accent'>
+            <button type='button' onClick={() => onConfirm()} className='btn btn-accent'>
               Confirm
             </button>
           </div>
@@ -47,7 +49,7 @@ export const ModalProvider = () => {
       </form>
 
       {modalOptions?.outsideClick && (
-        <form method='dialog' className='modal-backdrop' onSubmit={onModalClose}>
+        <form method='dialog' className='modal-backdrop' onSubmit={() => onModalClose()}>
           <button type='submit'>close</button>
         </form>
       )}

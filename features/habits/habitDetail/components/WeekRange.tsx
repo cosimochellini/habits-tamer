@@ -5,27 +5,43 @@ import { useMemo } from 'react'
 import { today } from '@/utils/date'
 import { useModal } from '@/store/modal'
 import { fetcher } from '@/utils/fetch'
-import type { ModalResult } from '@/store/modal'
 import type { HabitResult } from '@/store/habits'
-import { optimisticInsertLog } from '@/store/habits'
+import { optimisticDeleteLog, optimisticInsertLog } from '@/store/habits'
 import { startLoading, stopLoading } from '@/store/loading'
 import { mediumDateFormatter } from '@/utils/internazionalitazion'
-import type { PostHabitLogBody, PostHabitLogResult } from '@/app/api/habitLogs/route'
+import type {
+  DeleteHabitLogBody,
+  DeleteHabitLogResult,
+  PostHabitLogBody,
+  PostHabitLogResult,
+} from '@/app/api/habitLogs/route'
 
 import { CustomDayLogModal } from './CustomDayLogModal'
 import type { Range } from './HabitLogsOverview/utils/ranges'
+import type { CustomDayLogModalProps } from './CustomDayLogModal'
 
 const week = ['S', 'M', 'T', 'W', 'T', 'F', 'S'] as const
 const postHabitLog = fetcher<PostHabitLogResult, never, PostHabitLogBody>('/api/habitLogs', 'POST')
+const deleteHabitLog = fetcher<DeleteHabitLogResult, never, DeleteHabitLogBody>(
+  '/api/habitLogs',
+  'DELETE',
+)
 
-const saveLog = async ({ reason }: ModalResult<unknown>, habit: PostHabitLogBody) => {
-  if (reason === 'cancel') return
-
+const saveLog = async (habit: PostHabitLogBody) => {
   startLoading()
 
   const { result } = await postHabitLog({ body: habit })
 
   if (result) optimisticInsertLog(result)
+
+  stopLoading()
+}
+
+const deleteLog = async (body: DeleteHabitLogBody) => {
+  startLoading()
+  const { result } = await deleteHabitLog({ body })
+
+  if (result) optimisticDeleteLog(result)
 
   stopLoading()
 }
@@ -69,13 +85,20 @@ export const WeekRange = ({ habit, range }: WeekRangeProps) => {
       <div className='flex flex-row gap-2 justify-between mt-2 flex-1 items-center'>
         {processedRange.map(({ date, habitDoneInThisDay, isToday }) => {
           const onDayClick = async () => {
-            const result = await openModal({
+            const result = await openModal<CustomDayLogModalProps>({
               additionalState: { day: date },
               outsideClick: true,
-              modalActions: true,
             })
 
-            await saveLog(result, { date, habitId: habit.id })
+            if (result.reason !== 'confirm') return null
+
+            const { data } = result
+
+            if (data.operation === 'add') return saveLog({ date, habitId: habit.id })
+
+            if (data.operation === 'delete') return deleteLog({ habitLogId: data.logId })
+
+            return null
           }
 
           return (
@@ -101,15 +124,13 @@ interface WeeklyBadgeProps {
   quantity: number
   doneLogs: number
 }
-const WeeklyBadge = ({ quantity, doneLogs }: WeeklyBadgeProps) => {
-  return (
-    <div
-      className={classNames('badge badge-outline', {
-        'badge-success': doneLogs >= quantity,
-        'badge-accent': doneLogs < quantity,
-        'badge-error': doneLogs === 0,
-      })}>
-      {doneLogs}/{quantity}
-    </div>
-  )
-}
+const WeeklyBadge = ({ quantity, doneLogs }: WeeklyBadgeProps) => (
+  <div
+    className={classNames('badge badge-outline', {
+      'badge-success': doneLogs >= quantity,
+      'badge-accent': doneLogs < quantity,
+      'badge-error': doneLogs === 0,
+    })}>
+    {doneLogs}/{quantity}
+  </div>
+)

@@ -50,3 +50,16 @@ export const optimisticInsertLog = (habitLog: HabitLog) => {
     set({ habits: structuredClone(habits) })
   }
 }
+
+export const optimisticDeleteLog = (habitLog: HabitLog) => {
+  const set = useStore.setState
+  const { habits } = useStore.getState()
+
+  const habitToUpdate = habits.find((habit) => habit.id === habitLog.habitId)
+
+  if (habitToUpdate) {
+    habitToUpdate.habitLogs = habitToUpdate.habitLogs.filter((log) => log.id !== habitLog.id)
+
+    set({ habits: structuredClone(habits) })
+  }
+}

@@ -1,11 +1,11 @@
 {
   "name": "habits-tamer",
-  "version": "0.9.6",
+  "version": "0.9.8",
   "license": "MIT",
   "author": "Cosimo Chellini <cosimo.chellini@gmail.com>",
   "private": false,
   "scripts": {
-    "build": "next build",
+    "build": "pnpm increase & next build",
     "build:ci": "pnpm i & pnpm prisma:generate & pnpm build",
     "dev": "pnpm increase & next dev -p 4000",
     "increase": "npm --no-git-tag-version version patch",
