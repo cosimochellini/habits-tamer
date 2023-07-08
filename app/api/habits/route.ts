@@ -1,5 +1,4 @@
-import { z } from 'zod'
-import { HabitCategory, HabitFrequency } from '@prisma/client'
+import type { z } from 'zod'
 
 import { ok } from '@/ssr/status'
 import { body } from '@/ssr/modules/body'
@@ -7,6 +6,7 @@ import { auth } from '@/ssr/modules/auth'
 import { withModules } from '@/ssr/modules'
 import { prismaClient } from '@/prisma/client'
 import type { InferResponse } from '@/types/api'
+import { habitSchema } from '@/schemas/habit'
 
 const lastYear = new Date(new Date().setFullYear(new Date().getFullYear() - 1))
 export const GET = withModules([auth], async ({ email }) => {
@@ -21,18 +21,8 @@ export const GET = withModules([auth], async ({ email }) => {
 
   return ok({ habits })
 })
-
 export type GetHabitsResult = InferResponse<typeof GET>
 
-const habitSchema = z.object({
-  name: z.string(),
-  description: z.string().nullable(),
-
-  frequency: z.nativeEnum(HabitFrequency),
-  quantity: z.number(),
-
-  habitCategory: z.nativeEnum(HabitCategory),
-})
 export const POST = withModules([auth, body(habitSchema)], async ({ email, body }) => {
   const user = await prismaClient.user.findUniqueOrThrow({
     where: { email },

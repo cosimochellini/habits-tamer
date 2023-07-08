@@ -1,3 +1,6 @@
+import Link from 'next/link'
+import { IconEdit } from '@tabler/icons-react'
+
 import { relativeTime } from '@/utils/date'
 import type { HabitResult } from '@/store/habits'
 import { HabitCategoryIconBadge } from '@/components/habits/HabitCategoryIcon'
@@ -19,6 +22,11 @@ export const HabitDetailOverview = ({ habit }: HabitDetailOverviewProps) => (
           {habit.frequency} X {habit.quantity}
         </div>
       </div>
+    </div>
+    <div className='absolute -bottom-2 right-0'>
+      <Link href={`/habits/${habit.id}/edit`} className='btn btn-primary btn-sm btn-circle w-14'>
+        <IconEdit />
+      </Link>
     </div>
   </div>
 )

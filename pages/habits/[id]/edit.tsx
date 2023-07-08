@@ -1,9 +1,9 @@
 import Head from 'next/head'
 
-import { HabitDetail } from '@/features/habits/habitDetail'
 import { useCurrentHabit } from '@/hooks/habits/currentHabit'
+import { EditHabitDetail } from '@/features/habits/editHabit/EditHabit'
 
-const HabitDetailPage = () => {
+const EditHabitDetailPage = () => {
   const actualHabit = useCurrentHabit()
 
   if (!actualHabit) return null
@@ -13,8 +13,9 @@ const HabitDetailPage = () => {
       <Head>
         <title>Habits tamer - {actualHabit.name}</title>
       </Head>
-      <HabitDetail habit={actualHabit} />
+      <EditHabitDetail habit={actualHabit} />
     </div>
   )
 }
-export default HabitDetailPage
+
+export default EditHabitDetailPage

@@ -6,13 +6,13 @@ import { getMessage } from '@/utils/error'
 
 export type Module<TNext = unknown> = (req: NextRequest, res: RouteContext<TNext>) => Promise<TNext>
 
-export const withModules = <TA, TB, TResult extends NextResponse>(
-  middlewares: [Module<TA>, Module<TB>] | [Module<TA>],
-  handler: (context: TA & TB) => Promise<TResult>,
+export const withModules = <TA, TB, TC, TResult extends NextResponse>(
+  middlewares: [Module<TA>] | [Module<TA>, Module<TB>] | [Module<TA>, Module<TB>, Module<TC>],
+  handler: (context: TA & TB & TC) => Promise<TResult>,
 ) =>
   (async (req, context) => {
     try {
-      let routeContext = {} as TA & TB
+      let routeContext = {} as TA & TB & TC
 
       // eslint-disable-next-line no-restricted-syntax
       for (const middleware of middlewares) {
