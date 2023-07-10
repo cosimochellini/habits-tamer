@@ -13,11 +13,8 @@ interface HabitDetailProps {
   habit: HabitResult
 }
 
-const patchHabit = async (habit: HabitResult) =>
-  fetcher<PatchHabitResult, never, PatchHabitBody>(
-    `/api/habits/${habit.id}`,
-    'PATCH',
-  )({ body: habit })
+const patchHabit = async (body: HabitResult) =>
+  fetcher<PatchHabitResult, never, PatchHabitBody>(`/api/habits/${body.id}`, 'PATCH')({ body })
 
 export const EditHabitDetail = ({ habit }: HabitDetailProps) => {
   const [actualHabit, setActualHabit] = useObjectState<HabitResult>(habit)

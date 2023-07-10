@@ -2,32 +2,33 @@ import type { Habit } from '@prisma/client'
 import { useState } from 'react'
 import { useEffectOnceWhen } from 'rooks'
 
-import { fetcher } from '@/utils/fetch'
-import type { SuggestionListResult } from '@/app/api/habits/new/suggestions/list/route'
 import { HabitCategoryIconBadge } from '@/components/habits/HabitCategoryIcon'
 import type { ModalComponentProps } from '@/store/modal'
+import { useAsyncMemo } from '@/hooks/useAsyncMemo'
 
-const fetchSuggestions = fetcher<SuggestionListResult>('/api/habits/new/suggestions/list')
+const fetchSuggestions = () => import('../data/suggestions.json').then((x) => x.default as Habit[])
+
+function shuffle<T>(items: T[] | undefined) {
+  return (items ?? [])
+    .concat()
+    .sort(() => 0.5 - Math.random())
+    .slice(0, 4)
+}
 
 export const HabitSuggestionsModal = ({
   onChangeState,
   onConfirm,
 }: ModalComponentProps<{ habit: Habit }>) => {
-  const [suggestions, setSuggestions] = useState<Habit[]>()
+  const [suggestions, suggestionsLoaded] = useAsyncMemo(fetchSuggestions, undefined, [])
 
-  const suggestionLoading = suggestions === undefined
+  const [displayedSuggestions, setDisplayedSuggestions] = useState<Habit[]>()
 
   useEffectOnceWhen(() => {
-    fetchSuggestions().then(({ suggestedHabits }) => {
-      setSuggestions(suggestedHabits)
-    })
-  })
+    setDisplayedSuggestions(shuffle(suggestions))
+  }, suggestionsLoaded)
 
   const reloadSuggestions = () => {
-    setSuggestions(undefined)
-    fetchSuggestions().then(({ suggestedHabits }) => {
-      setSuggestions(suggestedHabits)
-    })
+    setDisplayedSuggestions(shuffle(suggestions))
   }
 
   const onSuggestionClick = (suggestion: Habit) => {
@@ -39,7 +40,7 @@ export const HabitSuggestionsModal = ({
     <div className='flex flex-col gap-6 w-full items-center justify-center'>
       <h2 className='text-2xl font-bold'>Suggestions</h2>
 
-      {suggestionLoading && (
+      {!suggestionsLoaded && (
         <div className='flex flex-col items-center justify-center gap-10'>
           <div className='text-center'>
             <p>A list of suggested habits is loading</p>
@@ -51,7 +52,7 @@ export const HabitSuggestionsModal = ({
       )}
 
       <div className='flex flex-col gap-6 w-full items-center justify-center'>
-        {suggestions?.map((suggestion) => (
+        {displayedSuggestions?.map((suggestion) => (
           <div className='card w-full bg-accent-focus' key={suggestion.description}>
             <div className='card-body'>
               <h2 className='card-title flex flex-row flex-wrap justify-around'>
@@ -75,7 +76,7 @@ export const HabitSuggestionsModal = ({
         ))}
       </div>
 
-      {!suggestionLoading && (
+      {suggestionsLoaded && (
         <div>
           <button type='button' className='btn btn-sm' onClick={reloadSuggestions}>
             Load more

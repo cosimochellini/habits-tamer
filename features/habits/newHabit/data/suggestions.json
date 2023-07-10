@@ -1,0 +1,205 @@
+[
+  {
+    "name": "Meditate",
+    "description": "Practice mindfulness and meditation for a few minutes each day.",
+    "frequency": "DAILY",
+    "habitCategory": "LIFESTYLE",
+    "quantity": 1
+  },
+  {
+    "name": "Practice gratitude",
+    "description": "Write down three things you're grateful for every day.",
+    "frequency": "DAILY",
+    "habitCategory": "PERSONAL_GROWTH",
+    "quantity": 1
+  },
+  {
+    "name": "Drink enough water",
+    "description": "Ensure you drink at least 8 glasses of water each day.",
+    "frequency": "DAILY",
+    "habitCategory": "HEALTH",
+    "quantity": 1
+  },
+  {
+    "name": "Learn a new language",
+    "description": "Spend 15 minutes each day learning a new language.",
+    "frequency": "DAILY",
+    "habitCategory": "EDUCATION",
+    "quantity": 1
+  },
+  {
+    "name": "Practice deep breathing",
+    "description": "Take deep breaths for relaxation several times throughout the day.",
+    "frequency": "DAILY",
+    "habitCategory": "LIFESTYLE",
+    "quantity": 5
+  },
+  {
+    "name": "Write in a journal",
+    "description": "Reflect on your thoughts and experiences by writing in a journal each day.",
+    "frequency": "DAILY",
+    "habitCategory": "PERSONAL_GROWTH",
+    "quantity": 1
+  },
+  {
+    "name": "Do yoga",
+    "description": "Follow a yoga routine for flexibility and relaxation.",
+    "frequency": "WEEKLY",
+    "habitCategory": "HEALTH",
+    "quantity": 2
+  },
+  {
+    "name": "Practice time management",
+    "description": "Plan your day ahead and prioritize tasks for better productivity.",
+    "frequency": "DAILY",
+    "habitCategory": "WORK",
+    "quantity": 1
+  },
+  {
+    "name": "Learn to play a musical instrument",
+    "description": "Spend 30 minutes each day practicing a musical instrument of your choice.",
+    "frequency": "DAILY",
+    "habitCategory": "HOBBIES",
+    "quantity": 1
+  },
+  {
+    "name": "Eat a balanced breakfast",
+    "description": "Start your day with a nutritious and balanced breakfast.",
+    "frequency": "DAILY",
+    "habitCategory": "HEALTH",
+    "quantity": 1
+  },
+  {
+    "name": "Practice positive affirmations",
+    "description": "Repeat positive statements to boost self-confidence and motivation.",
+    "frequency": "DAILY",
+    "habitCategory": "PERSONAL_GROWTH",
+    "quantity": 5
+  },
+  {
+    "name": "Volunteer for a charitable cause",
+    "description": "Spend a few hours each month volunteering for a cause you care about.",
+    "frequency": "MONTHLY",
+    "habitCategory": "LIFESTYLE",
+    "quantity": 1
+  },
+  {
+    "name": "Practice active listening",
+    "description": "Give your full attention when someone is speaking to you.",
+    "frequency": "DAILY",
+    "habitCategory": "PERSONAL_GROWTH",
+    "quantity": 1
+  },
+  {
+    "name": "Limit screen time before bed",
+    "description": "Avoid using electronic devices for at least 30 minutes before going to sleep.",
+    "frequency": "DAILY",
+    "habitCategory": "LIFESTYLE",
+    "quantity": 1
+  },
+  {
+    "name": "Set specific goals",
+    "description": "Define clear and achievable goals for various areas of your life.",
+    "frequency": "DAILY",
+    "habitCategory": "PERSONAL_GROWTH",
+    "quantity": 5
+  },
+  {
+    "name": "Try a new hobby",
+    "description": "Explore a new hobby or activity that interests you.",
+    "frequency": "MONTHLY",
+    "habitCategory": "HOBBIES",
+    "quantity": 1
+  },
+  {
+    "name": "Practice positive self-talk",
+    "description": "Replace negative thoughts with positive and empowering self-talk.",
+    "frequency": "DAILY",
+    "habitCategory": "PERSONAL_GROWTH",
+    "quantity": 5
+  },
+  {
+    "name": "Take breaks during work",
+    "description": "Schedule short breaks to rest and recharge during work or study sessions.",
+    "frequency": "DAILY",
+    "habitCategory": "WORK",
+    "quantity": 5
+  },
+  {
+    "name": "Read news from different sources",
+    "description": "Stay informed by reading news articles from various reliable sources.",
+    "frequency": "DAILY",
+    "habitCategory": "EDUCATION",
+    "quantity": 1
+  },
+  {
+    "name": "Practice portion control",
+    "description": "Be mindful of your food portions to maintain a healthy diet.",
+    "frequency": "DAILY",
+    "habitCategory": "HEALTH",
+    "quantity": 1
+  },
+  {
+    "name": "Learn to code",
+    "description": "Spend 30 minutes each day learning coding skills and programming languages.",
+    "frequency": "DAILY",
+    "habitCategory": "EDUCATION",
+    "quantity": 1
+  },
+  {
+    "name": "Spend time in nature",
+    "description": "Go for a walk or spend time outdoors to connect with nature.",
+    "frequency": "WEEKLY",
+    "habitCategory": "LIFESTYLE",
+    "quantity": 3
+  },
+  {
+    "name": "Practice forgiveness",
+    "description": "Let go of grudges and practice forgiveness for your own peace of mind.",
+    "frequency": "DAILY",
+    "habitCategory": "PERSONAL_GROWTH",
+    "quantity": 1
+  },
+  {
+    "name": "Learn a new recipe",
+    "description": "Expand your cooking skills by trying out a new recipe each week.",
+    "frequency": "WEEKLY",
+    "habitCategory": "HOBBIES",
+    "quantity": 1
+  },
+  {
+    "name": "Practice random acts of kindness",
+    "description": "Perform small acts of kindness for others without expecting anything in return.",
+    "frequency": "DAILY",
+    "habitCategory": "LIFESTYLE",
+    "quantity": 1
+  },
+  {
+    "name": "Improve posture",
+    "description": "Pay attention to your posture and make necessary adjustments throughout the day.",
+    "frequency": "DAILY",
+    "habitCategory": "HEALTH",
+    "quantity": 5
+  },
+  {
+    "name": "Learn from successful people",
+    "description": "Read biographies or listen to interviews of successful individuals for inspiration.",
+    "frequency": "WEEKLY",
+    "habitCategory": "PERSONAL_GROWTH",
+    "quantity": 1
+  },
+  {
+    "name": "Learn a new language",
+    "description": "Spend 15 minutes each day learning a new language.",
+    "frequency": "DAILY",
+    "habitCategory": "EDUCATION",
+    "quantity": 1
+  },
+  {
+    "name": "Learn a new skill",
+    "description": "Spend 30 minutes each day learning a new skill.",
+    "frequency": "DAILY",
+    "habitCategory": "EDUCATION",
+    "quantity": 1
+  }
+]
