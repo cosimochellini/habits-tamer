@@ -19,7 +19,7 @@ const fetchHabits = fetcher<GetHabitsResult>('/api/habits')
 const useStore = create(
   persist<State>(() => ({ habits: [], initialized: false }), {
     name: 'habits-storage',
-    partialize: ({ habits }) => ({ habits } as State),
+    partialize: ({ habits }) => ({ habits }) as State,
   }),
 )
 

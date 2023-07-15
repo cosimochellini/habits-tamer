@@ -21,9 +21,7 @@ export const HabitsListPage = () => {
 
         <div
           className={`${classes.containerCustom} flex flex-col gap-4 px-2 md:grid md:grid-cols-2`}>
-          {habits?.map((habit) => (
-            <HabitCard habit={habit} key={habit.id} />
-          ))}
+          {habits?.map((habit) => <HabitCard habit={habit} key={habit.id} />)}
         </div>
       </div>
     </div>
