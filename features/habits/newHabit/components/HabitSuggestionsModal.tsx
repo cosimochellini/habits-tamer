@@ -5,15 +5,9 @@ import { useEffectOnceWhen } from 'rooks'
 import { HabitCategoryIconBadge } from '@/components/habits/HabitCategoryIcon'
 import type { ModalComponentProps } from '@/store/modal'
 import { useAsyncMemo } from '@/hooks/useAsyncMemo'
+import { shuffle } from '@/utils/array'
 
 const fetchSuggestions = () => import('../data/suggestions.json').then((x) => x.default as Habit[])
-
-function shuffle<T>(items: T[] | undefined) {
-  return (items ?? [])
-    .concat()
-    .sort(() => 0.5 - Math.random())
-    .slice(0, 4)
-}
 
 export const HabitSuggestionsModal = ({
   onChangeState,
@@ -23,13 +17,11 @@ export const HabitSuggestionsModal = ({
 
   const [displayedSuggestions, setDisplayedSuggestions] = useState<Habit[]>()
 
-  useEffectOnceWhen(() => {
-    setDisplayedSuggestions(shuffle(suggestions))
-  }, suggestionsLoaded)
-
   const reloadSuggestions = () => {
     setDisplayedSuggestions(shuffle(suggestions))
   }
+
+  useEffectOnceWhen(reloadSuggestions, suggestionsLoaded)
 
   const onSuggestionClick = (suggestion: Habit) => {
     onChangeState({ habit: suggestion })
