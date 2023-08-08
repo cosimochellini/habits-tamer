@@ -6,6 +6,8 @@ import type { HabitLog } from '@prisma/client'
 import { fetcher } from '@/utils/fetch'
 import { useSSRSafeSelector } from '@/hooks/ssrStore'
 import type { GetHabitsResult } from '@/app/api/habits/route'
+import { randomConfetti } from '@/utils/confetti'
+import { currentPeriodLogs } from '@/features/overview/utils'
 
 export type HabitResult = GetHabitsResult['habits'][0]
 
@@ -32,13 +34,15 @@ export const useHabits = () => {
   return habits
 }
 
-export const reloadHabits = () => {
+export const reloadHabits = async () => {
   const set = useStore.setState
 
-  return fetchHabits().then(({ habits }) => set({ habits, initialized: true }))
+  const { habits } = await fetchHabits()
+
+  return set({ habits, initialized: true })
 }
 
-export const optimisticInsertLog = (habitLog: HabitLog) => {
+export const optimisticInsertLog = async (habitLog: HabitLog) => {
   const set = useStore.setState
   const { habits } = useStore.getState()
 
@@ -48,6 +52,10 @@ export const optimisticInsertLog = (habitLog: HabitLog) => {
     habitToUpdate.habitLogs.push(habitLog)
 
     set({ habits: structuredClone(habits) })
+
+    const doneLogs = currentPeriodLogs(habitToUpdate)
+
+    if (doneLogs.length >= habitToUpdate.quantity) await randomConfetti()
   }
 }
 

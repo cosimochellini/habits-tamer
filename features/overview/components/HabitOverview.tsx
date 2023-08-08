@@ -74,7 +74,7 @@ const HabitOverviewFront = ({ habit }: HabitOverviewProps) => {
       body: { habitId },
     })
 
-    if (result) optimisticInsertLog(result)
+    if (result) await optimisticInsertLog(result)
 
     setLogLoading(false)
   }

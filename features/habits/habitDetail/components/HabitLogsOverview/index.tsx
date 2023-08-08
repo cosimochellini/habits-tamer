@@ -39,11 +39,7 @@ export const HabitLogsOverview = ({ habit }: HabitLogOverviewProps) => {
         <h2 className='card-title text-balanced'>
           Logs <IconCalendarCheck />
         </h2>
-        <div
-          className={classNames(
-            'card-actions justify-end max-h-96 overflow-auto',
-            classes.container,
-          )}>
+        <div className={classNames('card-actions justify-end', classes.container)}>
           {ranges.map((range) => (
             <WeekRange habit={habit} range={range} key={range.at(0)?.getTime()} />
           ))}
