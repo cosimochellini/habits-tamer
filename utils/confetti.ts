@@ -1,3 +1,5 @@
+import { logger } from '@/istances/logger'
+
 const emojis = ['🏆', '🌈', '⚡️', '💥', '✨', '💫', '🌸', '🦄', '🦹‍']
 
 const randomChoice = () => Math.random() > 0.5
@@ -13,5 +15,5 @@ export const randomConfetti = async () => {
       emojis: useEmojis ? randomEmojis : undefined,
       emojiSize: 20,
     })
-    .catch(console.error)
+    .catch(logger.error)
 }
