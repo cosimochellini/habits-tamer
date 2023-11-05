@@ -102,9 +102,11 @@ const HabitOverviewFront = ({ habit }: HabitOverviewProps) => {
           <HabitCategoryIconBadge compact category={habit.habitCategory} />
         </div>
         <div className='absolute -bottom-2 -right-2'>
+          {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
           <button
             onClick={stopPropagation(() => logHabit(habit.id))}
             type='button'
+            title='Log habit'
             disabled={logLoading}
             className={classNames('btn btn-accent btn-sm transition-opacity', {
               hidden: lastLogToday,
