@@ -1,11 +1,11 @@
 import type { Habit } from '@prisma/client'
 import { IconArrowNarrowRight, IconLoader } from '@tabler/icons-react'
 
-import { prevent } from '@/utils/react'
-import { fetcher } from '@/utils/fetch'
 import type { SuggestionQuery, SuggestionResult } from '@/app/api/habits/new/suggestions/route'
-import { useModal } from '@/store/modal'
 import { HabitSuggestionsModal } from '@/features/habits/newHabit/components/HabitSuggestionsModal'
+import { useModal } from '@/store/modal'
+import { fetcher } from '@/utils/fetch'
+import { prevent } from '@/utils/react'
 
 const fetchSuggestions = fetcher<SuggestionResult, SuggestionQuery>('/api/habits/new/suggestions')
 
@@ -27,8 +27,10 @@ export const NewHabitSuggestion = ({
 }: NewHabitSuggestionProps) => {
   const openModal = useModal(HabitSuggestionsModal)
 
-  const onSuggestionSelected = (habit: Habit) => {
-    onHabitSuggested(habit)
+  const onSuggestionSelected = (habit: Habit | null) => {
+    if (habit) {
+      onHabitSuggested(habit)
+    }
     setSuggestion({ loading: false, completed: true })
   }
 
@@ -39,9 +41,7 @@ export const NewHabitSuggestion = ({
 
     const { suggestedHabit } = await fetchSuggestions({
       query: { habit: suggestion.name },
-    })
-
-    if (!suggestedHabit) return
+    }).catch(() => ({ suggestedHabit: null }))
 
     onSuggestionSelected(suggestedHabit)
   }

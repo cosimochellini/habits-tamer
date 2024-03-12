@@ -1,11 +1,11 @@
+import { IconUser } from '@tabler/icons-react'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
-import { IconUser } from '@tabler/icons-react'
 
 const initials = (name: string | undefined | null) =>
   name
     ?.split(' ')
-    .map(([n]) => n.toUpperCase())
+    .map(([n]) => n?.toUpperCase())
     .join('')
 
 export const Navbar = () => {
