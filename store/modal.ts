@@ -1,5 +1,5 @@
+import type { ReactNode } from 'react'
 import { create } from 'zustand'
-import type { FC, ReactNode } from 'react'
 
 interface ModalOptions<TState = Record<string, unknown>> {
   outsideClick?: boolean
@@ -14,13 +14,16 @@ export interface ModalComponentProps<T> {
 }
 type CloseReason = 'confirm' | 'cancel'
 
+// Define a client component type that excludes async server components
+type ClientFC<T> = (props: T) => ReactNode
+
 interface State {
   open: boolean
-  component: (props: ModalComponentProps<unknown>) => ReactNode
+  component: ClientFC<ModalComponentProps<unknown>>
   modalOptions?: ModalOptions
   closeReason?: CloseReason
   closeModal: (reason: CloseReason) => void
-  openModal: <T>(component: FC<ModalComponentProps<T>>, options?: ModalOptions) => void
+  openModal: <T>(component: ClientFC<ModalComponentProps<T>>, options?: ModalOptions) => void
   modalState: Record<string, unknown>
   updateModalState: (state: Record<string, unknown>) => void
 }
@@ -47,7 +50,7 @@ export const useModalStore = useStore
 
 export type ModalResult<T> = { reason: 'cancel' } | { reason: 'confirm'; data: T }
 
-export const useModal = <TProps>(component: FC<ModalComponentProps<TProps>>) => {
+export const useModal = <TProps>(component: ClientFC<ModalComponentProps<TProps>>) => {
   const openModal = useStore((x) => x.openModal)
   return <TState = Record<string, unknown>>(options?: ModalOptions<TState>) => {
     openModal<TProps>(component, options as ModalOptions)

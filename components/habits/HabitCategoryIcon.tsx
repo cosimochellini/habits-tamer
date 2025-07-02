@@ -1,7 +1,4 @@
 import type { HabitCategory } from '@prisma/client'
-import type { ReactNode } from 'react'
-import { memo, useMemo } from 'react'
-import type { TablerIconsProps } from '@tabler/icons-react'
 import {
   IconAirBalloon,
   IconBeerFilled,
@@ -11,10 +8,18 @@ import {
   IconFriends,
   IconHeartbeat,
 } from '@tabler/icons-react'
+import type { ReactNode } from 'react'
+import { memo, useMemo } from 'react'
 
 import { formatEnumValue } from '@/utils/enum'
 
-interface HabitCategoryIconProps extends TablerIconsProps {
+interface TablerIconProps {
+  size?: number
+  color?: string
+  stroke?: number
+}
+
+interface HabitCategoryIconProps extends TablerIconProps {
   category: HabitCategory
 }
 
@@ -26,7 +31,7 @@ const habitIcons = {
   HOBBIES: IconAirBalloon,
   LIFESTYLE: IconBeerFilled,
   PERSONAL_GROWTH: IconBrain,
-} as const satisfies Record<HabitCategory, (props: TablerIconsProps) => ReactNode>
+} as const satisfies Record<HabitCategory, (props: TablerIconProps) => ReactNode>
 
 export const HabitCategoryIcon = memo(function HabitCategoryIcon({
   category,
